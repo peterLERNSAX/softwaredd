@@ -5,7 +5,6 @@
 - einfacher Datenbankzugriff über <code>SqlAlchemy</code>
 - Funktioniert auf allen gänigen Betriebssystemen
 
-
 ## Vorteile C#:
 - viel Klickibunti
 - statische Typisierung
@@ -13,3 +12,5 @@
 ## Nachteile C#:
 - nur mit Windows kompatibel
 - schweres Einbinden von Datenbanken
+- wenig Klickibunti
+- Syntax
