@@ -3,6 +3,11 @@
 
 ### Use-Case-Diagramm
 ![alt text](use-case.png "Title")
-[a relative link](use-case.pdf)
+[a Use-Case Diagramm PDF](use-case.pdf)
+
 ### Sequenzdiagramm
 ### Webserver
+- OS: Debian11
+- Benutzername: user
+- Passwort: ******
+- IP-Adresse:
