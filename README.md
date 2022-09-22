@@ -2,7 +2,7 @@
 ## Dokumentation
 
 ### Use-Case-Diagramm
-![Schaubild Use-Case](use-case.png "Title")
+![Schaubild Use-Case](static/images/use-case.png "Title")
 [Use-Case Diagramm PDF](use-case.pdf)
 
 ### Sequenzdiagramm
@@ -31,4 +31,18 @@ Aufsetzen eines Servers über WMware Workstation Player 16
     </body>
   </html>
 
+```
+```bash
+  $ nano /etc/apache2/sites-available/wiki.conf
+```
+```html
+  <VirtualHost *80>
+	  DocumentRoot /var/www/html/wiki
+	  ErrorLog ${APACHE_LOG_DIR}/error.log
+	  CustomLOG ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+```
+```bash
+  $ a2ensite wiki.conf
+  $ rm /etc/apache2/sites-enabled/000-default.conf
 ```
