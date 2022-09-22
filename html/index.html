@@ -4,17 +4,91 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/css/style.css">
     <title>Wiki</title>
 </head>
 <body>
-    <h1 class="heading"><center>Wiki</center></h1>
+    
     <nav class="navbar">
-        <a class="nav-item" href="">Use-Case Diagramm</a>
-        <a class="nav-item" href="">Sequenzdiagramm</a>
+        <h1 class="heading"><center>Wiki</center></h1>
+        <a class="nav-item" href="#use-case">Use-Case Diagramm</a>
+        <a class="nav-item" href="#sequenz">Sequenzdiagramm</a>
+        <a class="nav-item" href="#webserver">Webserver</a>
     </nav>
     <div class="content">
+        <h2><a id="use-case">Use-Case Diagramm</a></h2>
+        <div class="image-use-case">
+            <img src="static/images/use-case.png" alt="Schaubild zum Use-Case Diagramm">
+        </div>
+        <div class="text">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
 
+            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
+            
+            Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   
+            
+            Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   
+            
+            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   
+            
+            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+        </div>
+        <h2><a id="sequenz">Sequenzdiagramm</a></h2>
+        <div class="image-sequenz">
+            <img src="static/images/Sequenzdiagramm.png" alt="Schaubild zum Sequenzdiagramm">
+        </div>
+        <h2><a id="webserver">Webserver</a></h2>
+        <div class="text">
+            Aufsetzen eines Servers über WMware Workstation Player 16 <br>
+            OS: Debian 11 <br>
+            Benutzername: user <br>
+            Passwort: „wie immer“ <br>
+            IP-Adresse: 192.168.72.129 <br>
+            Software: Apache2 <br>
+            Ordner: /var/www/html/wiki <br>
+            Step-by-Step <br><br>
+            <code>                    
+                $ apt install apache2 <br>
+                $ systemctl start apache2 <br>
+                $ mkdir /var/www/html/wiki <br>
+                $ chown -R www-data:www-data /var/www/html/wiki <br>
+                $ chmod -R 755 /var/www/html/wiki <br>
+                $ nano /var/www/html/wiki/index.html <br>
+            </code>
+            <br>
+            <div class="code-block">
+                <code>
+                    &lt;html> <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;body> <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p> Freunde der guten Unterhaltung, es funktioniert!&lt;/p> <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/body> <br>
+                    &lt;/html>
+
+                </code>
+            </div>
+            <br>
+            <code>
+                $ nano /etc/apache2/sites-available/wiki.conf
+            </code>
+            <br>
+            <br>
+            <div class="code-block">
+                <code>
+                    &lt;VirtualHost *80> <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;DocumentRoot /var/www/html/wiki <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;ErrorLog ${APACHE_LOG_DIR}/error.log <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;CustomLOG ${APACHE_LOG_DIR}/access.log combined <br>
+                    &lt;/VirtualHost> <br>
+                </code>
+            </div>
+            <br>
+            <code>
+                $ a2ensite wiki.conf
+                $ rm /etc/apache2/sites-enabled/000-default.conf
+            </code>
+            
+            
+        </div>
     </div>
 </body>
 </html>
