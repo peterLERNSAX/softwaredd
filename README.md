@@ -6,7 +6,7 @@
 [Use-Case Diagramm PDF](use-case.pdf)
 
 ### Sequenzdiagramm
-![Schaubild Sequenzdiagramm](static/images/Sequendiagramm.png "Title")
+![Schaubild Sequenzdiagramm](static/images/Sequenzdiagramm.png "Title")
 [Sequenzdiagramm PDF](Sequenzdiagramm.pdf)
 ### Webserver
 
