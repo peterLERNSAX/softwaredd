@@ -6,6 +6,8 @@
 [Use-Case Diagramm PDF](use-case.pdf)
 
 ### Sequenzdiagramm
+![Schaubild Sequenzdiagramm](static/images/Sequenzdiagramm.png "Title")
+[Use-Case Diagramm PDF](Sequenzdiagramm.pdf)
 ### Webserver
 
 Aufsetzen eines Servers über WMware Workstation Player 16
