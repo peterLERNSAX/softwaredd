@@ -23,24 +23,68 @@
 		<li style="float:right"><a class="nav-item">COPYRIGHT</a></li>
     </ul>
     <div class="content">
-        <h2><a id="use-case">Aufsetzen eines Servers über WMware Workstation Player 16</a></h2>
-        <div class="text">
-			- OS: Debian 11 <br>
-			- Benutzername: user <br>
-			- Passwort: ****** <br>
-			- IP-Adresse: 192.168.72.129 <br>
-			- Software: Apache2 <br>
-			- Ordner: /var/www/html/wiki <br> 
-			- Step-by-Step: <br>
-			<br>
-			<pre>
-    $ apt install apache2 <br>
-    $ systemctl start apache2 <br>
-    $ mkdir /var/www/html/wiki <br>
-    $ chown -R www-data:www-data /var/www/html/wiki <br>
-    $ chmod -R 755 /var/www/html/wiki <br>
-    $ nano /var/www/html/wiki/index.html <br>
-			</pre>
+		<h2><a id="use-case">Einrichtung einer Webseite auf einem Raspberry Pi 4</a></h2>
+		<div class="text">
+			<ol>
+				<h3><li>Grundlagen</li></h3><br><br>
+
+				<div class="text">
+					- Software: Apache2 <br>
+					- eingetragene Domäne für das Raspberry Pi <br>
+					- erstellte Subdomäne für die Webseite <br>
+					- benötigte html-, css-, script-Ordner auf dem Raspberry Pi <br>
+				</div><br>
+
+				<h3><li>Konfiguration vHost</li></h3><br><br>
+		<pre>
+	$ mkdir /var/www/webserver<br>
+	$ chown -R www-data:www-data /var/www/webserver<br>
+	$ chmod -R 755 /var/www/webserver<br>
+	$ nano /etc/apache2/sites-available/wiki.conf<br>
+	$ cp -r /PFAD/ZU/HTML-DATEIEN/ /var/www/webserver
+		</pre>
+
+		<pre class="divHtml">
+			<code class="language-html">
+	&lt;VirtualHost *80&gt;
+		ServerName webserver.steppencloud.de
+		DocumentRoot /var/www/webserver
+		ErrorLog ${APACHE_LOG_DIR}/error.log
+		CustomLOG ${APACHE_LOG_DIR}/access.log combined
+	&lt;/VirtualHost&gt;
+			</code>
+		</pre>
+		<pre>
+	$ a2ensite wiki.conf <br>
+	$ systemctl restart apache2.service<br>
+		</pre>
+			</ol>
+
+
+        <h2><a id="use-case">Aufsetzen eines Servers über VMware Workstation Player 16</a></h2>
+        <ol>
+			<h3><li>Grundlagen</li></h3><br><br>
+
+			<div class="text">
+				- OS: Debian 11 <br>
+				- Benutzername: user <br>
+				- Passwort: ****** <br>
+				- IP-Adresse: 192.168.72.129 <br>
+			</div><br>
+			<h3><li>Webserver</li></h3><br><br>
+		<pre>
+	$ apt install apache2 <br>
+	$ systemctl start apache2 <br>
+	$ mkdir /var/www/html/wiki <br>
+	$ chown -R www-data:www-data /var/www/html/wiki <br>
+	$ chmod -R 755 /var/www/html/wiki <br>
+		</pre><br>
+
+			<h3><li>Erste HTML-Datei</li></h3><br><br>
+
+		<pre>
+	$ nano /var/www/html/wiki/index.html 
+		</pre>
 			<pre class="divHtml">
 				<code class="language-html">
 &lt;html&gt;
@@ -49,10 +93,10 @@
 	&lt;/body&gt;
 &lt;/html&gt;
 				</code>
-			</pre>
-			<pre>
+			</pre><br>
+		<pre>
 	$ nano /etc/apache2/sites-available/wiki.conf
-			</pre>
+		</pre>
 			<pre class="divHtml">
 				<code class="language-html">
 &lt;VirtualHost *80&gt;
@@ -61,13 +105,16 @@
 	CustomLOG ${APACHE_LOG_DIR}/access.log combined
 &lt;/VirtualHost&gt;
 				</code>
-			</pre>
-			<pre>
-    $ a2ensite wiki.conf <br>
+			</pre><br>
+
+		<pre>
+    $ a2ensite wiki.conf<br>
+	$ systemctl restart apache2.service<br>
     $ rm /etc/apache2/sites-enabled/000-default.conf
-			</pre>
+		</pre>
+	</ol>
 			<br>
-			Webserver ist jetzt über IP-Adresse 192.168.72.129 auf Port 80 abrufbar.
+			Webserver ist jetzt über IP-Adresse 192.168.72.129 auf Port 80 lokal abrufbar.
         </div>
     </div>
 </body>
