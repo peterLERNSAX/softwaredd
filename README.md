@@ -52,9 +52,23 @@ Aufsetzen eines Servers über WMware Workstation Player 16
 ### Notwendige Daten 
 1. Identifizieren Sie notwendige Daten, die als Voraussetzung für die Angebotserstellung dienen.
     - *Grundriss*
-    - *Hardware*
+    - *IT-Komponenten/Hardware*
 
 2. Analysieren Sie die Datenquellen hinsichtlich der der Bereitsteller/Orte und möglicher Datenformate in denen diese bereitgestellt werden können.
+    - *Grundriss*:
+        - *kann vom Kunden bereitgestellt werden als:*
+            - *.pdf (Konvertierung in .step erforderlich)*
+            - *.[Bildformat] (Konvertierung in .step erforderlich)*
+            - *auf Papier (Konvertierung in .step erforderlich)*
+            - *.step*
+            - *andere 3D/2D-Formate (Konvertierung in .step erforderlich)*
+        - *wenn kein Grundriss vorhanden:*
+            - *Erstelllung vom Mitarbeiter im .step Format*
+    - *Hardware*:
+        - *wenn Modell vorhanden, dann als .step aus Datenbank*
+        - *wenn Modell nicht vorhanden, dann .step erstellen*
+        - *Technische Daten als Tabellenformat (muss in DB integriert werden)*
+
 
 
 3. Untersuchen Sie die Datenformate/Datenquellen im Detail
@@ -68,14 +82,13 @@ Aufsetzen eines Servers über WMware Workstation Player 16
     
         *CAD-Format*
         1.	*Grundriss:*
-            - .*skp*
-            - *.3dm*
+            - *.step*
         2.	*Hardware*
-            - *.3dm*
+            - *.step*
 
     - c) wie können diese importiert und sinnvoll weiterverarbeitet werden
         - *In .pdf abspeichern*
-        - *Python hat ein rhino3dm-Modul*
+        - *STEPutils als Python libary*
     - d) welche Metainformationen sind zur Datenquelle vorhanden
 
 
