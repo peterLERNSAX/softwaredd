@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+	<link rel="stylesheet" href="../static/css/prism.css">
+	<script src="../static/js/prism.js"></script>
+    <title>Wiki Software DD GmbH</title>
+</head>
+<body>
+    
+    <div class="header">
+        <h1 class="heading">Wiki Softeware Dresden</h1>    
+    </div>
+    <ul>
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li><a class="nav-item" href="use-case.html">Use-Case Diagramm</a></li>
+        <li><a class="nav-item" href="sequenz.html">Sequenzdiagramm</a></li>
+        <li><a class="nav-item" href="webserver.html">Webserver</a></li>
+		<li><a class="nav-item active" href="phase5.html">Phase 5</a></li>
+        <li style="float:right"><a class="nav-item">COPYRIGHT</a></li>
+    </ul>
+    <div class="content">
+        <h2>Lösungen Phase 5</h2>
+        <div>
+			<pre class="phase5text">
+1. Identifizieren Sie notwendige Daten, die als Voraussetzung für die Angebotserstellung dienen.
+	- Grundriss
+	- Hardware
+
+2. Analysieren Sie die Datenquellen hinsichtlich der der Bereitsteller/Orte und möglicher Datenformate in denen diese bereitgestellt 
+	werden können.
+
+
+3. Untersuchen Sie die Datenformate/Datenquellen im Detail
+
+	a) welche Daten werden dargestellt
+		- Grundriss dargestellte Daten: 
+			- Fläche, 
+			- Längen, 
+			- Flächenverteilung (z.B. Kanten), 
+			- Anschlüsse (Steckdosen, Wasser), 
+			- Stromleitungen (wenn Glück), 
+			- Öffnungen (Türen, Fenster), 
+			- Schrägen
+
+		- Hardware: 
+			- Größe, 
+			- Gewicht, 
+			- Kabellänge, 
+			- Stromverbrauch (Sicherungsschutz), 
+			- Arbeitsplatzergonomie (Beleuchtung, Klima)
+
+	b) wie werden Daten in den Datenquellen dargestellt
+		CAD-Format
+		1. Grundriss:
+			- .skp
+			- .3dm
+		2. Hardware
+			- .3dm
+
+		
+	c) wie können diese importiert und sinnvoll weiterverarbeitet werden
+		- In .pdf abspeichern
+		- Python hat ein rhino3dm-Modul
+		
+	d) welche Metainformationen sind zur Datenquelle vorhanden
+
+4. Entscheiden Sie, wer die Daten innerhalb der ITSystemHausDD GmbH nutzen und verarbeiten darf.
+
+5. Entscheiden Sie sich für ein Datenformat für das Angebot.
+			</pre>
+        </div>
+    </div>
+</body>
+</html>

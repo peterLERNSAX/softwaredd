@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
 	<link rel="stylesheet" href="../static/css/prism.css">
-	<script src="../js/prism.js"></script>
+	<script src="../static/js/prism.js"></script>
     <title>Wiki Software DD GmbH</title>
 </head>
 <body>
@@ -19,7 +19,8 @@
         <li><a class="nav-item" href="use-case.html">Use-Case Diagramm</a></li>
         <li><a class="nav-item" href="sequenz.html">Sequenzdiagramm</a></li>
         <li><a class="nav-item active" href="webserver.html">Webserver</a></li>
-        <li style="float:right"><a class="nav-item">COPYRIGHT</a></li>
+        <li><a class="nav-item" href="phase5.html">Phase 5</a></li>
+		<li style="float:right"><a class="nav-item">COPYRIGHT</a></li>
     </ul>
     <div class="content">
         <h2><a id="use-case">Aufsetzen eines Servers über WMware Workstation Player 16</a></h2>
@@ -30,42 +31,43 @@
 			- IP-Adresse: 192.168.72.129 <br>
 			- Software: Apache2 <br>
 			- Ordner: /var/www/html/wiki <br> 
-			- Step-by-Step <br>
-
-			  $ apt install apache2
-			  $ systemctl start apache2
-			  $ mkdir /var/www/html/wiki
-			  $ chown -R www-data:www-data /var/www/html/wiki
-			  $ chmod -R 755 /var/www/html/wiki
-			  $ nano /var/www/html/wiki/index.html
-			  <div class="divHtml">
-				<pre>
-					<code class="language-html">
-&lt;html&gt;<br>
-	&lt;body&gt;<br>
-	  &lt;p&gt; Freunde der guten Unterhaltung, es funktioniert!&lt;/p&gt;<br>
-	&lt;/body&gt;<br>
+			- Step-by-Step: <br>
+			<br>
+			<pre>
+    $ apt install apache2 <br>
+    $ systemctl start apache2 <br>
+    $ mkdir /var/www/html/wiki <br>
+    $ chown -R www-data:www-data /var/www/html/wiki <br>
+    $ chmod -R 755 /var/www/html/wiki <br>
+    $ nano /var/www/html/wiki/index.html <br>
+			</pre>
+			<pre class="divHtml">
+				<code class="language-html">
+&lt;html&gt;
+	&lt;body&gt;
+	&lt;p&gt; Freunde der guten Unterhaltung, es funktioniert!&lt;/p&gt;
+	&lt;/body&gt;
 &lt;/html&gt;
-					</code>
-				</pre>
-			  </div>
-			  
-
-			```
-			```bash
-			  $ nano /etc/apache2/sites-available/wiki.conf
-			```
-			```html
-			  <VirtualHost *80>
-				  DocumentRoot /var/www/html/wiki
-				  ErrorLog ${APACHE_LOG_DIR}/error.log
-				  CustomLOG ${APACHE_LOG_DIR}/access.log combined
-			  </VirtualHost>
-			```
-			```bash
-			  $ a2ensite wiki.conf
-			  $ rm /etc/apache2/sites-enabled/000-default.conf
-			```
+				</code>
+			</pre>
+			<pre>
+	$ nano /etc/apache2/sites-available/wiki.conf
+			</pre>
+			<pre class="divHtml">
+				<code class="language-html">
+&lt;VirtualHost *80&gt;
+	DocumentRoot /var/www/html/wiki
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLOG ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+				</code>
+			</pre>
+			<pre>
+    $ a2ensite wiki.conf <br>
+    $ rm /etc/apache2/sites-enabled/000-default.conf
+			</pre>
+			<br>
+			Webserver ist jetzt über IP-Adresse 192.168.72.129 auf Port 80 abrufbar.
         </div>
     </div>
 </body>
