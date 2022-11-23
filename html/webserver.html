@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
+	<link rel="stylesheet" href="../static/css/prism.css">
+	<script src="../js/prism.js"></script>
     <title>Wiki Software DD GmbH</title>
 </head>
 <body>
@@ -20,12 +22,50 @@
         <li style="float:right"><a class="nav-item">COPYRIGHT</a></li>
     </ul>
     <div class="content">
-        <h2><a id="use-case">Use-Case Diagramm</a></h2>
-        <div class="image-use-case">
-            <img src="../static/images/use-case.png" alt="Schaubild zum Use-Case Diagramm">
-        </div>
+        <h2><a id="use-case">Aufsetzen eines Servers über WMware Workstation Player 16</a></h2>
         <div class="text">
-            Text
+			- OS: Debian 11 <br>
+			- Benutzername: user <br>
+			- Passwort: ****** <br>
+			- IP-Adresse: 192.168.72.129 <br>
+			- Software: Apache2 <br>
+			- Ordner: /var/www/html/wiki <br> 
+			- Step-by-Step <br>
+
+			  $ apt install apache2
+			  $ systemctl start apache2
+			  $ mkdir /var/www/html/wiki
+			  $ chown -R www-data:www-data /var/www/html/wiki
+			  $ chmod -R 755 /var/www/html/wiki
+			  $ nano /var/www/html/wiki/index.html
+			  <div class="divHtml">
+				<pre>
+					<code class="language-html">
+&lt;html&gt;<br>
+	&lt;body&gt;<br>
+	  &lt;p&gt; Freunde der guten Unterhaltung, es funktioniert!&lt;/p&gt;<br>
+	&lt;/body&gt;<br>
+&lt;/html&gt;
+					</code>
+				</pre>
+			  </div>
+			  
+
+			```
+			```bash
+			  $ nano /etc/apache2/sites-available/wiki.conf
+			```
+			```html
+			  <VirtualHost *80>
+				  DocumentRoot /var/www/html/wiki
+				  ErrorLog ${APACHE_LOG_DIR}/error.log
+				  CustomLOG ${APACHE_LOG_DIR}/access.log combined
+			  </VirtualHost>
+			```
+			```bash
+			  $ a2ensite wiki.conf
+			  $ rm /etc/apache2/sites-enabled/000-default.conf
+			```
         </div>
     </div>
 </body>
