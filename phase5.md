@@ -25,6 +25,10 @@
 
         </code>
     - c) wie können diese importiert und sinnvoll weiterverarbeitet werden
+        <code>
+        - In .pdf abspeichern
+        - Python hat ein rhino3dm-Modul
+        </code>
     - d) welche Metainformationen sind zur Datenquelle vorhanden
 
 
