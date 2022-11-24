@@ -143,7 +143,11 @@ Aufsetzen eines Servers über VMware Workstation Player 16
         - *In .pdf abspeichern*
         - *STEPutils als Python library*
     - d) welche Metainformationen sind zur Datenquelle vorhanden
-
+		• *Materialeigenschaften (Name, Dichte)*
+		• *geometrische und Baugruppenvalidierungseigenschaften*
+		• *Bezugselemente (Punkte, Ebenen, Achsen, Koordinatensysteme)*
+		• *benutzerdefinierte Parameter (Flächen, Kanten, Kurven)*
+		• *Produktherstellungsinformationen*
 
 4. Entscheiden Sie, wer die Daten innerhalb der ITSystemHausDD GmbH nutzen und verarbeiten darf.
     - *ITSystemHausDD GmbH Innendienst*
