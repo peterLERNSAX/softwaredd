@@ -95,3 +95,6 @@ Aufsetzen eines Servers über WMware Workstation Player 16
 4. Entscheiden Sie, wer die Daten innerhalb der ITSystemHausDD GmbH nutzen und verarbeiten darf.
 
 5. Entscheiden Sie sich für ein Datenformat für das Angebot.
+  - *.step weil:*
+    - *existierende Python libary*
+    - *kann mit kostenloser opensource Software erstellt und bearbeitet werden*
