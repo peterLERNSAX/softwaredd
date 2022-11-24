@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../static/css/style.css">
+		<link rel="stylesheet" href="../static/css/prism.css">
+		<script src="../static/js/prism.js"></script>
+		<title>Wiki Software DD GmbH</title>
+	</head>
+	<body>
+		
+		<div class="header">
+			<h1 class="heading">Wiki Softeware Dresden</h1>    
+		</div>
+		<ul>
+			<li><a class="nav-item" href="index.html">Home</a></li>
+			<li><a class="nav-item" href="geschäftsprozess.html">Geschäftsprozessszenarien</a></li>
+			<li><a class="nav-item" href="use-case.html">Use-Case Diagramm</a></li>
+			<li><a class="nav-item" href="sequenz.html">Sequenzdiagramm</a></li>
+			<li><a class="nav-item active" href="webserver.html">Webserver</a></li>
+			<li><a class="nav-item" href="notwendigedaten.html">notwendige Daten</a></li>
+			<li style="float:right"><a class="nav-item"  href="copyright.html">COPYRIGHT</a></li>
+		</ul>
+		<div class="content">
+			<h2><a id="use-case">Einrichtung einer Webseite auf einem Raspberry Pi 4</a></h2>
+			<div class="text">
+				<ol>
+					<h3><li>Grundlagen</li></h3><br><br>
+
+					<div class="text">
+						- Software: Apache2 <br>
+						- eingetragene Domäne für das Raspberry Pi <br>
+						- erstellte Subdomäne für die Webseite <br>
+						- benötigte html-, css-, script-Ordner auf dem Raspberry Pi <br>
+					</div><br>
+
+					<h3><li>Konfiguration vHost</li></h3><br><br>
+			<pre>
+	$ mkdir /var/www/webserver<br>
+	$ chown -R www-data:www-data /var/www/webserver<br>
+	$ chmod -R 755 /var/www/webserver<br>
+	$ nano /etc/apache2/sites-available/wiki.conf<br>
+	$ cp -r /PFAD/ZU/HTML-DATEIEN/ /var/www/webserver
+			</pre>
+
+			<pre class="divHtml">
+				<code class="language-html">
+&lt;VirtualHost *80&gt;
+	ServerName webserver.steppencloud.de
+	DocumentRoot /var/www/webserver
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLOG ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+				</code>
+			</pre>
+			<pre>
+	$ a2ensite wiki.conf <br>
+	$ systemctl restart apache2.service<br>
+			</pre>
+				</ol>
+
+
+			<h2><a id="use-case">Aufsetzen eines Servers über VMware Workstation Player 16</a></h2>
+			<ol>
+				<h3><li>Grundlagen</li></h3><br><br>
+
+				<div class="text">
+					- OS: Debian 11 <br>
+					- Benutzername: user <br>
+					- Passwort: ****** <br>
+					- IP-Adresse: 192.168.72.129 <br>
+				</div><br>
+				<h3><li>Webserver</li></h3><br><br>
+			<pre>
+	$ apt install apache2 <br>
+	$ systemctl start apache2 <br>
+	$ mkdir /var/www/html/wiki <br>
+	$ chown -R www-data:www-data /var/www/html/wiki <br>
+	$ chmod -R 755 /var/www/html/wiki <br>
+			</pre><br>
+
+				<h3><li>Erste HTML-Datei</li></h3><br><br>
+
+			<pre>
+	$ nano /var/www/html/wiki/index.html
+			</pre>
+				<pre class="divHtml">
+					<code class="language-html">
+&lt;html&gt;
+	&lt;body&gt;
+	&lt;p&gt; Freunde der guten Unterhaltung, es funktioniert!&lt;/p&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+					</code>
+				</pre><br>
+			<pre>
+	$ nano /etc/apache2/sites-available/wiki.conf
+			</pre>
+				<pre class="divHtml">
+					<code class="language-html">
+&lt;VirtualHost *80&gt;
+	DocumentRoot /var/www/html/wiki
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLOG ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+					</code>
+				</pre><br>
+			<pre>	$ a2ensite wiki.conf</pre>
+			<pre>	$ systemctl restart apache2.service</pre>
+			<pre>	$ rm /etc/apache2/sites-enabled/000-default.conf</pre>
+		</ol>
+				<br>
+				Webserver ist jetzt über IP-Adresse 192.168.72.129 auf Port 80 lokal abrufbar.
+			</div>
+		</div>
+	</body>
+</html>
