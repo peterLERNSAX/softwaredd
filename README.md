@@ -1,6 +1,8 @@
 # softwaredd
 ## Dokumentation
-### Beteiligten des Geschäftsprozesses
+Eine online Dokumentation ist unter *http://webserver.steppencloud.de* abrufbar.<br>
+Als Backup dient diese *README*.
+### Beteiligte des Geschäftsprozesses
 - ITSystemhausDD GmbH Außendienst
 - ITSystemhausDD GmbH Innendienst
 - Abteilung Einkauf
@@ -16,7 +18,7 @@
 - dynamische Typisierung, welche auch statisiert werden kann
 - Erfahrungen der Entwickler
 - einfacher Datenbankzugriff über <code>SqlAlchemy</code>
-- Funktioniert auf allen gänigen Betriebssystemen
+- Funktioniert auf allen gängigen Betriebssystemen
 - wenig Klickibunti
 - Syntax
 
@@ -26,7 +28,7 @@
 
 #### Nachteile C#:
 - nur mit Windows kompatibel
-- schweres Einbinden von Datenbanken
+- umständliches Einbinden von Datenbanken
 
 ### Use-Case-Diagramm
 ![Schaubild Use-Case](static/images/use-case.png "Title")
@@ -36,8 +38,32 @@
 ![Schaubild Sequenzdiagramm](static/images/Sequenzdiagramm.png "Title")
 [Sequenzdiagramm PDF](Sequenzdiagramm.pdf)
 ### Webserver
+Einrichtung einer Webseite auf einem Raspberry Pi 4
+- Software: Apache2
+- eingetragene Domäne für das Raspberry Pi
+- erstellte Subdomäne für die Webseite
+- benötigte html-, css-, script-Ordner auf dem Raspberry Pi
 
-Aufsetzen eines Servers über WMware Workstation Player 16
+#### Konfiguration vHost
+
+```bash
+    $ mkdir /var/www/webserver
+	$ chown -R www-data:www-data /var/www/webserver
+	$ chmod -R 755 /var/www/webserver
+	$ nano /etc/apache2/sites-available/wiki.conf
+	$ cp -r /PFAD/ZU/HTML-DATEIEN/ /var/www/webserver
+```
+```html
+  <VirtualHost *80>
+	  DocumentRoot /var/www/html/wiki
+	  ErrorLog ${APACHE_LOG_DIR}/error.log
+	  CustomLOG ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+```
+	$ a2ensite wiki.conf <br>
+	$ systemctl restart apache2.service
+
+Aufsetzen eines Servers über VMware Workstation Player 16
 - OS: Debian 11
 - Benutzername: user
 - Passwort: ******
