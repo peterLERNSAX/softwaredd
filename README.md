@@ -60,7 +60,7 @@ Einrichtung einer Webseite auf einem Raspberry Pi 4
 	  CustomLOG ${APACHE_LOG_DIR}/access.log combined
   </VirtualHost>
 ```
-    $ a2ensite wiki.conf <br>
+	  $ a2ensite wiki.conf <br>
 	  $ systemctl restart apache2.service
 
 Aufsetzen eines Servers über VMware Workstation Player 16
