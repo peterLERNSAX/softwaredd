@@ -141,10 +141,14 @@ Aufsetzen eines Servers über VMware Workstation Player 16
 
     - c) wie können diese importiert und sinnvoll weiterverarbeitet werden
         - *In .pdf abspeichern*
-        - *STEPutils als Python libary*
+        - *STEPutils als Python library*
     - d) welche Metainformationen sind zur Datenquelle vorhanden
-
-
+        -  *Materialeigenschaften (Name, Dichte)*
+	     - *geometrische und Baugruppenvalidierungseigenschaften*
+	    - *Bezugselemente (Punkte, Ebenen, Achsen, Koordinatensysteme)*
+	    - *benutzerdefinierte Parameter (Flächen, Kanten, Kurven)*
+	    - *Produktherstellungsinformationen*
+      
 4. Entscheiden Sie, wer die Daten innerhalb der ITSystemHausDD GmbH nutzen und verarbeiten darf.
     - *ITSystemHausDD GmbH Innendienst*
       - *interne Anwendungsentwickler*
@@ -155,5 +159,5 @@ Aufsetzen eines Servers über VMware Workstation Player 16
 
 5. Entscheiden Sie sich für ein Datenformat für das Angebot.
   - *.step weil:*
-    - *existierende Python libary*
+    - *existierende Python library*
     - *kann mit kostenloser opensource Software erstellt und bearbeitet werden*
