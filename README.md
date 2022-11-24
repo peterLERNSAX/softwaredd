@@ -47,7 +47,7 @@ Einrichtung einer Webseite auf einem Raspberry Pi 4
 #### Konfiguration vHost
 
 ```bash
-  $ mkdir /var/www/webserver
+	$ mkdir /var/www/webserver
 	$ chown -R www-data:www-data /var/www/webserver
 	$ chmod -R 755 /var/www/webserver
 	$ nano /etc/apache2/sites-available/wiki.conf
