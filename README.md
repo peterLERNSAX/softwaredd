@@ -47,7 +47,7 @@ Einrichtung einer Webseite auf einem Raspberry Pi 4
 #### Konfiguration vHost
 
 ```bash
-    $ mkdir /var/www/webserver
+  $ mkdir /var/www/webserver
 	$ chown -R www-data:www-data /var/www/webserver
 	$ chmod -R 755 /var/www/webserver
 	$ nano /etc/apache2/sites-available/wiki.conf
@@ -60,8 +60,8 @@ Einrichtung einer Webseite auf einem Raspberry Pi 4
 	  CustomLOG ${APACHE_LOG_DIR}/access.log combined
   </VirtualHost>
 ```
-	$ a2ensite wiki.conf <br>
-	$ systemctl restart apache2.service
+    $ a2ensite wiki.conf <br>
+	  $ systemctl restart apache2.service
 
 Aufsetzen eines Servers über VMware Workstation Player 16
 - OS: Debian 11
