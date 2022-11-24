@@ -1,5 +1,32 @@
 # softwaredd
 ## Dokumentation
+### Beteiligten des Geschäftsprozesses
+- ITSystemhausDD GmbH Außendienst
+- ITSystemhausDD GmbH Innendienst
+- Abteilung Einkauf
+- Abteilung Verkauf
+- Server zur automatischen Angebotserstellung 
+### Zielplatform für die Softwarentwicklung
+- Linux weil:
+  - sehr einfaches Arbeiten mit Python
+  - Opensource
+  - Ressourcensparend
+### Vergleich von Python mit C#
+#### Vorteile Python:
+- dynamische Typisierung, welche auch statisiert werden kann
+- Erfahrungen der Entwickler
+- einfacher Datenbankzugriff über <code>SqlAlchemy</code>
+- Funktioniert auf allen gänigen Betriebssystemen
+- wenig Klickibunti
+- Syntax
+
+#### Vorteile C#:
+- viel Klickibunti
+- statische Typisierung
+
+#### Nachteile C#:
+- nur mit Windows kompatibel
+- schweres Einbinden von Datenbanken
 
 ### Use-Case-Diagramm
 ![Schaubild Use-Case](static/images/use-case.png "Title")
