@@ -93,6 +93,12 @@ Aufsetzen eines Servers über WMware Workstation Player 16
 
 
 4. Entscheiden Sie, wer die Daten innerhalb der ITSystemHausDD GmbH nutzen und verarbeiten darf.
+    - *ITSystemHausDD GmbH Innendienst*
+      - *interne Anwendungsentwickler*
+    - *Abteilung Einkauf*
+      - *benötigt lediglich Zugriff auf die Daten der IT-Komponenten*
+    - *Abteilung Verkauf*
+      - *benötigt Zugriff auf alle Daten, die zur Angebotserstellung notwendig sind*
 
 5. Entscheiden Sie sich für ein Datenformat für das Angebot.
   - *.step weil:*
