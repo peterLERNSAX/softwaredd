@@ -141,7 +141,7 @@ Aufsetzen eines Servers über VMware Workstation Player 16
 
     - c) wie können diese importiert und sinnvoll weiterverarbeitet werden
         - *In .pdf abspeichern*
-        - *STEPutils als Python libary*
+        - *STEPutils als Python library*
     - d) welche Metainformationen sind zur Datenquelle vorhanden
 
 
@@ -155,5 +155,5 @@ Aufsetzen eines Servers über VMware Workstation Player 16
 
 5. Entscheiden Sie sich für ein Datenformat für das Angebot.
   - *.step weil:*
-    - *existierende Python libary*
+    - *existierende Python library*
     - *kann mit kostenloser opensource Software erstellt und bearbeitet werden*
