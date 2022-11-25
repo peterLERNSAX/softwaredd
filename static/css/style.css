@@ -20,14 +20,24 @@ ul {
   
 li {
     float: left;
+    height: auto;
+    width: auto;
 }
 
 li a {
     display: block;
     color: rgb(255, 255, 255);
     text-align: center;
-    padding: 14px 16px;
+    padding: 0.5em 0.4em 0.5em 0.4em;
     text-decoration: none;
+    font-size: 1.9em;
+    height: 1.8em;
+    margin-bottom: 0.2em;
+    width: auto;
+}
+
+.nav-item {
+    margin: 0.2em 0 0 0;
 }
 
 .active {
