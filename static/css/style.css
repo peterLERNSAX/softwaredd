@@ -5,7 +5,11 @@ body::-webkit-scrollbar {
 html {
     scrollbar-width: none;
     font-family: 'Times New Roman', Times, serif;
-}  
+}
+
+h1 {
+    font-size: 4.5em;
+}
 
 ul {
     list-style-type: none;
