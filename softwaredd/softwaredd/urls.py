@@ -20,4 +20,3 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("usermanagement.urls")),
 ]
-https://github.com/peterLERNSAX/softwaredd.git
