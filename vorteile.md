@@ -8,9 +8,9 @@
 - Syntax
 
 ## Vorteile C#:
-- viel Klickibunti
 - statische Typisierung
 
 ## Nachteile C#:
+- viel Klickibunti
 - nur mit Windows kompatibel
 - schweres Einbinden von Datenbanken
