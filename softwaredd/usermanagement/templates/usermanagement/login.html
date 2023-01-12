@@ -1,0 +1,10 @@
+{%extends "usermanagement/index.html"%}
+{%block content%}
+<form action="{%url 'login-view'%}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Login">
+</form>
+
+
+{%endblock%}

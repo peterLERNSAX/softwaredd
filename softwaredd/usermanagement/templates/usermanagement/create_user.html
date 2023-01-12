@@ -1,0 +1,10 @@
+{%extends "usermanagement/index.html"%}
+{%block content%}
+<form action="{%url 'create-user-view'%}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Anlegen">
+</form>
+
+
+{%endblock%}

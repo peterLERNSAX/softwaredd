@@ -7,6 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    Test
+    <a href="{% url 'index-view' %}">Home</a>
+    <a href="{% url 'login-view' %}">Login</a>
+    <a href="{% url 'create-user-view' %}">Nutzer erstellen</a>
+    <a href="{% url 'list-employee-view' %}">Nutzer auflisten</a>
+    {%block content%}
+    {%endblock%}
 </body>
 </html>
