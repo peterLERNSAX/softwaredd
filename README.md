@@ -1,6 +1,6 @@
 # softwaredd
 ## Dokumentation
-Eine online Dokumentation ist unter *http://webserver.steppencloud.de* abrufbar.<br>
+Eine online Dokumentation ist unter *https://webserver.steppencloud.de* abrufbar.<br>
 Als Backup dient diese *README*.
 ### Beteiligte des Geschäftsprozesses
 - ITSystemhausDD GmbH Außendienst
