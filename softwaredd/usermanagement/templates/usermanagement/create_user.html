@@ -1,9 +1,9 @@
 {%extends "usermanagement/index.html"%}
 {% load static %}
-{%block css%}
+{% block css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{%endblock%}
-{%block content%}
+{% endblock %}
+{% block content %}
 
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
@@ -11,9 +11,7 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-  
               <div class="">
-  
                 <h2 class="fw-bold mb-2 text-uppercase">Nutzer Anlegen</h2>
                 <p class="text-white-50 mb-5">Bitte die benötigten Rechte auswählen und ein Passwort generieren lassen.</p>
                 <form action="{%url 'create-user-view'%}" method="post">
@@ -22,37 +20,30 @@
                         <input type="text" name="username" maxlength="200" required="" class="form-control form-control-lg bg-dark text-white" id="id_username">
                         <label class="form-label" for="id_username">Nutzername</label>
                     </div>
-    
                     <div class="form-outline form-white bg-dark mb-4">
                         <input type="password" name="password" maxlength="64" minlength="4" required="" class="form-control bg-dark form-control-lg text-white" id="id_password">
                         <label class="form-label" for="id_password">Passwort</label>
                     </div>
-
                     <div class="form-check form-switch">
                         <input type="checkbox" name="usermanagement_field" class="form-check-input bg-secondary" id="id_usermanagement_field">
                         <label class="form-check-label" for="id_usermanagement_field">Nutzermanagement</label>
                     </div>
-
                     <div class="form-check form-switch">
                         <input type="checkbox" name="layout_field" class="form-check-input bg-secondary" id="id_layout_field">
                         <label class="form-check-label" for="id_layout_field">Grundriss</label>
                     </div>
-
                     <div class="form-check form-switch">
                         <input type="checkbox" name="database_field" class="form-check-input bg-secondary" id="id_database_field">
                         <label class="form-check-label" for="id_database_field">Datenbank</label>
                     </div>
-
                     <div class="form-check form-switch">
                         <input type="checkbox" name="offer_field" class="form-check-input bg-secondary" id="id_offer_field">
                         <label class="form-check-label" for="id_offer_field">Angebot</label>
                     </div>
-
                     <div class="form-check form-switch">
                         <input type="checkbox" name="offer_file_field" class="form-check-input bg-secondary" id="id_offer_file_field">
                         <label class="form-check-label" for="id_offer_file_field">Angebotsdatei</label>
                     </div>
-                    
                     <button class="btn btn-outline-light btn-lg px-5 mt-3" type="submit">Erstellen</button>
                 </form>
               </div>
@@ -62,6 +53,4 @@
       </div>
     </div>
   </section>
-
-
-{%endblock%}
+{% endblock %}
