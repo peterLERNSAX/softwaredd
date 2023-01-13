@@ -16,7 +16,7 @@ class IndexView(View):
 class EmployeeLogin(LoginView):
     """Login"""
     template_name = "usermanagement/login.html"
-    success_url = ""
+    success_url = "{% url 'index-view'%}"
 
 class DeleteEmployee(View):
     """Delete Employee"""
