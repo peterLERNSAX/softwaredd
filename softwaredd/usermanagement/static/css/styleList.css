@@ -1,0 +1,9 @@
+html, body {
+    background-color: #535c66;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
