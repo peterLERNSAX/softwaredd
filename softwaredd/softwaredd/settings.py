@@ -52,6 +52,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "softwaredd.urls"
 
+LOGIN_REDIRECT_URL = "/"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
