@@ -35,8 +35,9 @@ class ListEmployee(View):
 
 def employee_authentication(user:Employee,check_value:str)->bool:
     """check permissions of employee"""
+    check_user:Employee = Employee.objects.get(username=user.username)
     if check_value == "usermanagement":
-        if not user.perm_usermanagement:
+        if not check_user.perm_usermanagement:
             return False
         return True
 
@@ -44,23 +45,19 @@ class CreateUserView(View):
     """Create user """
     def get(self,request:HttpRequest)->HttpResponse:
         """get"""
-        #if not request.user.is_authenticated:
-        #    return redirect("index-view")
-        #if not type(request.user) is Employee:
-        #    return redirect("index-view")
-        #if not employee_authentication(request.user,"usermanagement"):
-        #    return redirect("index-view")
+        if not request.user.is_authenticated:
+            return redirect("index-view")
+        if not employee_authentication(request.user,"usermanagement"):
+            return redirect("index-view")
         form = CreateEmployeeform()
         return render(request,"usermanagement/create_user.html",{"form":form})
-    
+   
     def post(self,request:HttpRequest)->HttpResponse:
         """post"""
-        #if not request.user.is_authenticated:
-        #    return redirect("index-view")
-        #if not type(request.user) is Employee:
-        #    return redirect("index-view")
-        #if not employee_authentication(request.user,"usermanagement"):
-        #    return redirect("index-view")
+        if not request.user.is_authenticated:
+            return redirect("index-view")
+        if not employee_authentication(request.user,"usermanagement"):
+            return redirect("index-view")
         form = CreateEmployeeform(data=request.POST)
         if not form.is_valid():
             return redirect("create-user-view")
@@ -71,11 +68,15 @@ class CreateUserView(View):
         offer = form.cleaned_data["offer_field"]
         offer_file = form.cleaned_data["offer_file_field"]
         password = form.cleaned_data["password"]
-        employee = Employee(username=username,password= make_password(password))
-        employee.perm_usermanagement = usermanagement
-        employee.perm_layout = layout
-        employee.perm_database = database
-        employee.perm_offer = offer
-        employee.perm_offer_file = offer_file
-        employee.save()
-        return redirect("index-view")
+        try:
+            Employee.objects.get(username=username)
+            return redirect("create-user-view")
+        except Exception:
+            employee = Employee(username=username,password= make_password(password))
+            employee.perm_usermanagement = usermanagement
+            employee.perm_layout = layout
+            employee.perm_database = database
+            employee.perm_offer = offer
+            employee.perm_offer_file = offer_file
+            employee.save()
+            return redirect("index-view")
