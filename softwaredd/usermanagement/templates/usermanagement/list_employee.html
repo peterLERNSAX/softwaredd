@@ -1,0 +1,21 @@
+{%extends "usermanagement/index.html"%}
+{%block content%}
+{% for item in employees %} 
+    <div>
+        <p><b>Nutzername: {{item.username}}</b></p>
+        <p>Rechte:</p>
+        <p>Nutzermanagement: {{item.perm_usermanagement}}</p>
+        <p>Grundriss: {{item.perm_layout}}</p>
+        <p>Datenbank: {{item.perm_database}}</p>
+        <p>Angebot: {{item.perm_offer}}</p>
+        <p>Angebotsdatei: {{item.perm_offer_file}}</p>
+        <form action="{% url 'delete-employee-view' item.pk %}" id="delte-form" method="post">
+            {%csrf_token%}
+            <input type="submit" value="Löschen">
+        </form>
+    </div>
+    <br>
+{%endfor%}
+
+
+{%endblock%}
