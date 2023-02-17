@@ -38,7 +38,7 @@
   </nav>
   {% if messages %}
   {% for message in messages %}
-  <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+  <div{% if message.tags %} class="{{ message.tags }}-msg" {% endif %}>{{ message }}</div>
     {% endfor %}
     {% endif %}
     {% block content %}

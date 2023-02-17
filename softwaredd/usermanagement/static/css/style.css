@@ -6,10 +6,10 @@ body {
     overflow: hidden
 }
 
-.info {}
+.info-msg {}
 
-.error {}
+.error-msg {}
 
-.succes {}
+.success-msg {}
 
-.warning {}
+.warning-msg {}
