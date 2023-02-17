@@ -13,19 +13,21 @@ from .models import Employee
 # Create your views here.
 
 
+def get_employee(request: HttpRequest) -> Employee | None:
+    """gets an employee"""
+    if request.user.is_authenticated:
+        employ: Employee = Employee.objects.get(username=request.user.username)
+        return employ
+    return None
+
+
 class IndexView(View):
     """Indexview"""
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        if request.user.is_authenticated:
-            employ: Employee = Employee.objects.get(
-                username=request.user.username
-            )
-            return render(
-                request, "usermanagement/index.html", {"employ": employ}
-            )
-        return render(request, "usermanagement/index.html", {"employ": None})
+        employ = get_employee(request)
+        return render(request, "usermanagement/index.html", {"employ": employ})
 
 
 class DocsView(View):
@@ -33,7 +35,10 @@ class DocsView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/index_webserver.html")
+        employ = get_employee(request)
+        return render(
+            request, "usermanagement/index_webserver.html", {"employ": employ}
+        )
 
 
 class GeschaeftsprozessView(View):
@@ -41,7 +46,12 @@ class GeschaeftsprozessView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/geschaeftsprozess.html")
+        employ = get_employee(request)
+        return render(
+            request,
+            "usermanagement/geschaeftsprozess.html",
+            {"employ": employ},
+        )
 
 
 class NotwendigedatenView(View):
@@ -49,7 +59,10 @@ class NotwendigedatenView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/notwendigedaten.html")
+        employ = get_employee(request)
+        return render(
+            request, "usermanagement/notwendigedaten.html", {"employ": employ}
+        )
 
 
 class SequenzView(View):
@@ -57,7 +70,10 @@ class SequenzView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/sequenz.html")
+        employ = get_employee(request)
+        return render(
+            request, "usermanagement/sequenz.html", {"employ": employ}
+        )
 
 
 class UseCaseView(View):
@@ -65,7 +81,10 @@ class UseCaseView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/use-case.html")
+        employ = get_employee(request)
+        return render(
+            request, "usermanagement/use-case.html", {"employ": employ}
+        )
 
 
 class CopyrightView(View):
@@ -73,7 +92,10 @@ class CopyrightView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/copyright.html")
+        employ = get_employee(request)
+        return render(
+            request, "usermanagement/copyright.html", {"employ": employ}
+        )
 
 
 class WebserverView(View):
@@ -81,7 +103,10 @@ class WebserverView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/webserver.html")
+        employ = get_employee(request)
+        return render(
+            request, "usermanagement/webserver.html", {"employ": employ}
+        )
 
 
 # pylint: disable=too-many-ancestors
@@ -122,10 +147,11 @@ class ListEmployee(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
         all_employee = Employee.objects.all()
+        employ = get_employee(request)
         return render(
             request,
             "usermanagement/list_employee.html",
-            {"employees": all_employee},
+            {"employees": all_employee, "employ": employ},
         )
 
 
@@ -150,8 +176,11 @@ class CreateUserView(View):
             messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
         form = CreateEmployeeform()
+        employ = get_employee(request)
         return render(
-            request, "usermanagement/create_user.html", {"form": form}
+            request,
+            "usermanagement/create_user.html",
+            {"form": form, "employ": employ},
         )
 
     def post(self, request: HttpRequest) -> HttpResponse:
