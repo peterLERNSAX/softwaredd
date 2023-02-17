@@ -1,0 +1,20 @@
+{% extends "usermanagement/index_webserver.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+    <link rel="stylesheet" href="{% static 'css/prism.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="{% static 'js/prism.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="text-white">
+    <div class="card bg-dark text-white m-5">
+        <div class="card-body p-5">
+            <h2><a id="use-case">Copyright</a></h2>
+            <div class="text">
+                Wir verkaufen Ihre Daten sicher und zuverlässig.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -20,17 +20,27 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-item nav-link active" href="{% url 'index-view' %}">Nutzermanagement</a>
-            <a class="nav-item nav-link" href="geschäftsprozess.html">Geschäftsprozessszenarien</a>
-            <a class="nav-item nav-link" href="use-case.html">Use-Case Diagramm</a>
-            <a class="nav-item nav-link" href="sequenz.html">Sequenzdiagramm</a>
-            <a class="nav-item nav-link" href="webserver.html">Webserver</a>
-            <a class="nav-item nav-link" href="notwendigedaten.html">Notwendige Daten</a>
-            <a href="https://github.com/peterLERNSAX/softwaredd"><img src="../static/images/github.png" style="height:1.8em"></a>
-            <a href="https://lernsax.de"><img src="../static/images/lernsax2.png" style="height:1.7em"></a>
+            <a class="nav-item nav-link" href="{% url 'geschaeftsprozess-view' %}">Geschäftsprozessszenarien</a>
+            <a class="nav-item nav-link" href="{% url 'use-case-view' %}">Use-Case Diagramm</a>
+            <a class="nav-item nav-link" href="{% url 'sequenz-view' %}">Sequenzdiagramm</a>
+            <a class="nav-item nav-link" href="{% url 'webserver-view' %}">Webserver</a>
+            <a class="nav-item nav-link" href="{% url 'notwendigedaten-view' %}">Notwendige Daten</a>
+            <a href="https://github.com/peterLERNSAX/softwaredd"><img src="../static/images/github.png" style="height:2.5em"></a>
+            <a href="https://lernsax.de"><img src="../static/images/lernsax2.png" style="height:2.5em"></a>
+            <a class="nav-right nav-link" href="{% url 'copyright-view' %}">COPYRIGHT</a>
           </div>
         </div>
     </nav>
     {% block content %}
+        <div class="text-white m-3">
+            <h2>Inhalsverzeichnis</h2>
+            <p>• <a class="text-white" href="{% url 'index-view' %}">Nutzermanagement-Tool</a></p>
+            <p>• <a class="text-white" href="% url 'geschaeftsprozess-view' %}">Geschäftsprozessszenarien</a></p>
+            <p>• <a class="text-white" href="{% url 'use-case-view' %}">Use-Case Diagramm</a></p>
+            <p>• <a class="text-white" href="{% url 'sequenz-view' %}">Sequenzdiagramm</a></p>
+            <p>• <a class="text-white" href="{% url 'webserver-view' %}">Webserver</a></p>
+            <p>• <a class="text-white" href="{% url 'notwendigedaten-view' %}">Notwendige Daten</a></p>
+        </div>
     {% endblock %}
 </body>
 </html>

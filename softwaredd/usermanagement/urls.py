@@ -20,4 +20,10 @@ urlpatterns = [
     ),
     path("logout/", views.LogoutView.as_view(), name="logout-view"),
     path("docs/", views.DocsView.as_view(), name="show-webserver-view"),
+    path("geschaeftsprozess/", views.GeschaeftsprozessView.as_view(), name="geschaeftsprozess-view"),
+    path("notwendigedaten/", views.NotwendigedatenView.as_view(), name="notwendigedaten-view"),
+    path("sequenz/", views.SequenzView.as_view(), name="sequenz-view"),
+    path("use-case/", views.UseCaseView.as_view(), name="use-case-view"),
+    path("copyright/", views.CopyrightView.as_view(), name="copyright-view"),
+    path("webserver/", views.WebserverView.as_view(), name="webserver-view"),
 ]
