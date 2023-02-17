@@ -36,6 +36,15 @@
       </div>
     </div>
   </nav>
+  {% if messages %}
+  <div class="messages m-5">
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} w-25">
+      {% bs_icon message.tags size='1.5em' %} {{message}}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
   {% block content %}
   <div class="text-white m-3">
     <h2>Inhalsverzeichnis</h2>
