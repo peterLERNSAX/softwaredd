@@ -28,6 +28,62 @@ class IndexView(View):
         return render(request, "usermanagement/index.html", {"employ": None})
 
 
+class DocsView(View):
+    """Docs"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/index_webserver.html")
+
+
+class GeschaeftsprozessView(View):
+    """Geschäftsprozesse"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/geschaeftsprozess.html")
+
+
+class NotwendigedatenView(View):
+    """Notwendigedaten"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/notwendigedaten.html")
+
+
+class SequenzView(View):
+    """Sequenz"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/sequenz.html")
+
+
+class UseCaseView(View):
+    """Use-Case"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/use-case.html")
+
+
+class CopyrightView(View):
+    """Copyright"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/copyright.html")
+
+
+class WebserverView(View):
+    """Webserver"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/webserver.html")
+
+
 # pylint: disable=too-many-ancestors
 class EmployeeLogin(LoginView):
     """Login"""

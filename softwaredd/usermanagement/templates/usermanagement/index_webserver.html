@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {% block css %}
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% endblock %}
+    <title>ITSystemHausDD GmbH</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
+        <a class="navbar-brand" href="#"> ITSystemHausDD GmbH</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="{% url 'index-view' %}">Nutzermanagement</a>
+            <a class="nav-item nav-link" href="{% url 'geschaeftsprozess-view' %}">Geschäftsprozessszenarien</a>
+            <a class="nav-item nav-link" href="{% url 'use-case-view' %}">Use-Case Diagramm</a>
+            <a class="nav-item nav-link" href="{% url 'sequenz-view' %}">Sequenzdiagramm</a>
+            <a class="nav-item nav-link" href="{% url 'webserver-view' %}">Webserver</a>
+            <a class="nav-item nav-link" href="{% url 'notwendigedaten-view' %}">Notwendige Daten</a>
+            <a href="https://github.com/peterLERNSAX/softwaredd"><img src="../static/images/github.png" style="height:2.5em"></a>
+            <a href="https://lernsax.de"><img src="../static/images/lernsax2.png" style="height:2.5em"></a>
+            <a class="nav-right nav-link" href="{% url 'copyright-view' %}">COPYRIGHT</a>
+          </div>
+        </div>
+    </nav>
+    {% block content %}
+        <div class="text-white m-3">
+            <h2>Inhalsverzeichnis</h2>
+            <p>• <a class="text-white" href="{% url 'index-view' %}">Nutzermanagement-Tool</a></p>
+            <p>• <a class="text-white" href="% url 'geschaeftsprozess-view' %}">Geschäftsprozessszenarien</a></p>
+            <p>• <a class="text-white" href="{% url 'use-case-view' %}">Use-Case Diagramm</a></p>
+            <p>• <a class="text-white" href="{% url 'sequenz-view' %}">Sequenzdiagramm</a></p>
+            <p>• <a class="text-white" href="{% url 'webserver-view' %}">Webserver</a></p>
+            <p>• <a class="text-white" href="{% url 'notwendigedaten-view' %}">Notwendige Daten</a></p>
+        </div>
+    {% endblock %}
+</body>
+</html>

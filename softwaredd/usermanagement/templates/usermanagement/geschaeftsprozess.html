@@ -1,0 +1,46 @@
+{% extends "usermanagement/index_webserver.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+    <link rel="stylesheet" href="{% static 'css/prism.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="{% static 'js/prism.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="text-white">
+    <div class="card bg-dark text-white m-5">
+        <div class="card-body p-5">
+            <h2><a id="use-case">Geschäftsprozessszenarien</a></h2>
+            <div class="text">
+                <pre class="phase5text">
+                    <h5>Beteiligte des Geschäftsprozesses</h5>
+        • ITSystemhausDD GmbH Außendienst<br>
+        • ITSystemhausDD GmbH Innendienst<br>
+        • Abteilung Einkauf<br>
+        • Abteilung Verkauf<br>
+        • Server zur automatischen Angebotserstellung
+                    <h5>Zielplatform für die Softwarentwicklung</h5><h5>Linux weil:</h5>
+        • sehr einfaches Arbeiten mit Python<br>
+        • opensource<br>
+        • ressourcensparend<br>
+                    <h5>Vergleich von Python mit C#</h5><h5>Vorteile Python:</h5>
+        • dynamische Typisierung, welche auch statisiert werden kann<br>
+        • Erfahrungen der Entwickler<br>
+        • einfacher Datenbankzugriff über SqlAlchemy<br>
+        • funktioniert auf allen gänigen Betriebssystemen<br>
+        • wenig Klickibunti<br>
+        • Syntax<br>
+                    <h5> Nachteile Python:</h5>
+        • langsamer als kompilierte Sprachen
+                    <h5> Vorteile C#:</h5>
+        • viel Klickibunti<br>
+        • statische Typisierung
+                    <h5>Nachteile C#:</h5>
+        • nur mit Windows kompatibel<br>
+        • schweres Einbinden von Datenbanken
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

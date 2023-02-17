@@ -1,0 +1,17 @@
+{% extends "usermanagement/index_webserver.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+{% endblock %}
+{% block content %}
+<div class="text-white">
+    <div class="card bg-dark text-white m-5">
+        <div class="card-body p-5">
+            <h2><a id="sequenz">Sequenzdiagramm</a></h2>
+            <div class="image-sequenz">
+                <img src="../static/images/Sequenzdiagramm.png" alt="Schaubild zum Sequenzdiagramm" id="img">
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock %}

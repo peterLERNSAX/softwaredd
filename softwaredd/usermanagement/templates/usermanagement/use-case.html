@@ -1,0 +1,17 @@
+{% extends "usermanagement/index_webserver.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+{% endblock %}
+{% block content %}
+<div class="text-white">
+    <div class="card bg-dark text-white m-5">
+        <div class="card-body p-5">
+            <h2><a id="use-case">Use-Case Diagramm</a></h2>
+            <div class="image-use-case">
+                <img src="../static/images/use-case.png" alt="Schaubild zum Use-Case Diagramm" id="img">
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock %}

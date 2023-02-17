@@ -1,0 +1,75 @@
+{% extends "usermanagement/index_webserver.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+{% endblock %}
+{% block content %}
+<div class="text-white">
+	<div class="card bg-dark text-white m-5">
+		<div class="card-body p-5">
+    		<h2>Notwendige Daten</h2>
+				<div>
+		<pre class="phase5text">
+	1. Identifizieren Sie notwendige Daten, die als Voraussetzung für die Angebotserstellung dienen.<br>
+	• Grundriss
+	• IT-Komponenten/Hardware
+
+	2. Analysieren Sie die Datenquellen hinsichtlich der der Bereitsteller/Orte und möglicher Datenformate in denen diese bereitgestellt 
+		werden können.<br>
+	• Grundriss:<br>
+		• kann vom Kunden bereitgestellt werden als:<br>
+			• .pdf (Konvertierung in .step erforderlich)
+			• .[Bildformat] (Konvertierung in .step erforderlich)
+			• auf Papier (Konvertierung in .step erforderlich)
+			• .step 
+			• andere 2D/3D-Formate (Konvertierung in .step erforderlich)<br>
+		• wenn kein Grundriss vorhanden:<br>
+			• Erstellung vom Mitarbeiter im .step Format<br>
+	• Hardware:<br>
+		• wenn Modell vorhanden, dann als .step aus Datenbank
+		• wenn Modell nicht vorhanden, dann .step erstellen
+		• technische Daten als Tabellenformat (muss in DB integriert werden)<br>
+
+	3. Untersuchen Sie die Datenformate/Datenquellen im Detail
+
+		a) welche Daten werden dargestellt<br>
+		• Grundriss dargestellte Daten: Fläche, Längen, Flächenverteilung (z.B. Kanten), Anschlüsse (Steckdosen, Wasser), Stromleitungen (wünschenswert), Öffnungen (Türen, Fenster), Schrägen
+		• Hardware: Größe, Gewicht, Kabellänge, Stromverbrauch (Sicherungsschutz), Arbeitsplatzergonomie (Beleuchtung, Klima)
+
+		b) wie werden Daten in den Datenquellen dargestellt<br>
+		CAD-Format<br>
+			1. Grundriss:
+				• .step
+			2. Hardware:
+				• .step
+
+		c) wie können diese importiert und sinnvoll weiterverarbeitet werden<br>
+		• in .pdf abspeichern
+		• STEPutils als Python library
+			
+		d) welche Metainformationen sind zur Datenquelle vorhanden
+		• Materialeigenschaften (Name, Dichte)
+		• geometrische und Baugruppenvalidierungseigenschaften
+		• Bezugselemente (Punkte, Ebenen, Achsen, Koordinatensysteme)
+		• benutzerdefinierte Parameter (Flächen, Kanten, Kurven)
+		• Produktherstellungsinformationen
+		(<a  href="http://support.ptc.com/help/creo/creo_pma/usascii/index.html#page/data_exchange%2Finterface%2FSupported_STEP_AP_202_Classes.html%23">Quelle</a>)
+
+	4. Entscheiden Sie, wer die Daten innerhalb der ITSystemHausDD GmbH nutzen und verarbeiten darf<br>
+	• ITSystemHausDD GmbH Innendienst
+		• interne Anwendungsentwickler
+	• Abteilung Einkauf
+		• benötigt lediglich Zugriff auf die Daten der IT-Komponenten
+	• Abteilung Verkauf
+		• benötigt Zugriff auf alle Daten, die zur Angebotserstellung notwendig sind
+
+	5. Entscheiden Sie sich für ein Datenformat für das Angebot<br>
+	• .step weil:
+		• existierende Python library
+		• kann mit kostenloser opensource Software erstellt und bearbeitet werden
+		</pre>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
