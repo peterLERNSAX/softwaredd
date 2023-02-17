@@ -10,6 +10,8 @@ from django.views import View
 from .forms import CreateEmployeeform
 from .models import Employee
 
+import time
+
 # Create your views here.
 
 
@@ -193,6 +195,8 @@ class CreateUserView(View):
             return redirect("index-view")
         form = CreateEmployeeform(data=request.POST)
         if not form.is_valid():
+            messages.info(request, "Überprüfe die eingegebenen Daten!")
+            time.sleep(5)
             return redirect("create-user-view")
         username = form.cleaned_data["username"]
         usermanagement = form.cleaned_data["usermanagement_field"]
@@ -201,6 +205,10 @@ class CreateUserView(View):
         offer = form.cleaned_data["offer_field"]
         offer_file = form.cleaned_data["offer_file_field"]
         password = form.cleaned_data["password"]
+        check_password = form.cleaned_data["check_password"]
+        if not password == check_password:
+            messages.error(request, "Die eingegebenen Passwörter stimmen nicht überein!")
+            return redirect("create-user-view")
         try:
             Employee.objects.get(username=username)
             messages.warning(request, "Nutzer existiert bereits")

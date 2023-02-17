@@ -38,7 +38,7 @@
     </div>
   </nav>
   {% if messages %}
-  <div class="messages m-5">
+  <div class="messages m-5 d-flex">
     {% for message in messages %}
     <div class="alert alert-{{message.tags}} w-25">
       {% bs_icon message.tags size='1.5em' %} {{message}}
