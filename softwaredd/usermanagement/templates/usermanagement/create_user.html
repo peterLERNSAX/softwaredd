@@ -6,14 +6,15 @@
 {% block content %}
 
 <section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
+  <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
             <div class="">
               <h2 class="fw-bold mb-2 text-uppercase">Nutzer Anlegen</h2>
-              <p class="text-white-50 mb-5">Bitte die benötigten Rechte auswählen und ein Passwort generieren lassen.
+              <p class="text-white-50 mb-3">
+                Bitte die benötigten Rechte auswählen und ein Passwort generieren lassen.
               </p>
               <form action="{%url 'create-user-view'%}" method="post">
                 {% csrf_token %}
@@ -26,6 +27,11 @@
                   <input type="password" name="password" maxlength="64" minlength="4" required=""
                     class="form-control bg-dark form-control-lg text-white" id="id_password">
                   <label class="form-label" for="id_password">Passwort</label>
+                </div>
+                <div class="form-outline form-white bg-dark mb-4">
+                  <input type="password" name="check_password" maxlength="64" minlength="4" required=""
+                    class="form-control bg-dark form-control-lg text-white" id="id_check_password">
+                  <label class="form-label" for="id_check_password">Passwort wiederholen</label>
                 </div>
                 <div class="form-check form-switch">
                   <input type="checkbox" name="usermanagement_field" class="form-check-input bg-secondary"

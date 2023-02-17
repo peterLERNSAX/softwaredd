@@ -6,14 +6,17 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpRequest
 from django.shortcuts import HttpResponse, redirect, render
 from django.views import View
+from typing import Optional
 
 from .forms import CreateEmployeeform
 from .models import Employee
 
+import time
+
 # Create your views here.
 
 
-def get_employee(request: HttpRequest) -> Employee | None:
+def get_employee(request: HttpRequest) -> Optional[Employee]:
     """gets an employee"""
     if request.user.is_authenticated:
         employ: Employee = Employee.objects.get(username=request.user.username)
@@ -193,6 +196,8 @@ class CreateUserView(View):
             return redirect("index-view")
         form = CreateEmployeeform(data=request.POST)
         if not form.is_valid():
+            messages.info(request, "Überprüfe die eingegebenen Daten und beachte, dass die Passwörter identisch sein müssen!")
+            #time.sleep(5) sicher das wir das haben wollen? Es wird erst gesleept weil die message erst beim render nagezigt wird
             return redirect("create-user-view")
         username = form.cleaned_data["username"]
         usermanagement = form.cleaned_data["usermanagement_field"]
@@ -200,14 +205,14 @@ class CreateUserView(View):
         database = form.cleaned_data["database_field"]
         offer = form.cleaned_data["offer_field"]
         offer_file = form.cleaned_data["offer_file_field"]
-        password = form.cleaned_data["password"]
+        password = make_password(form.cleaned_data["password"])
         try:
             Employee.objects.get(username=username)
             messages.warning(request, "Nutzer existiert bereits")
             return redirect("create-user-view")
         except Exception:
             employee = Employee(
-                username=username, password=make_password(password)
+                username=username, password=password
             )
             employee.perm_usermanagement = usermanagement
             employee.perm_layout = layout
