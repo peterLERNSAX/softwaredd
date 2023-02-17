@@ -69,7 +69,7 @@
                             <form action="{% url 'delete-employee-view' item.pk %}" id="delte-form" method="post"
                                 name="my-form" ajax="true">
                                 {% csrf_token %}
-                                <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5">
+                                <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
                             </form>
                             <button type="button" class="btn btn-outline-light btn-lg px-5"
                                 data-bs-dismiss="modal">Abbruch</button>
