@@ -28,6 +28,14 @@ class IndexView(View):
         return render(request, "usermanagement/index.html", {"employ": None})
 
 
+class DocsView(View):
+    """Docs"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/index_webserver.html")
+
+
 # pylint: disable=too-many-ancestors
 class EmployeeLogin(LoginView):
     """Login"""

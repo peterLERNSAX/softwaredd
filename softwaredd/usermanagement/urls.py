@@ -19,4 +19,5 @@ urlpatterns = [
         name="delete-employee-view",
     ),
     path("logout/", views.LogoutView.as_view(), name="logout-view"),
+    path("docs/", views.DocsView.as_view(), name="show-webserver-view"),
 ]
