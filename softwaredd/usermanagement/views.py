@@ -1,3 +1,5 @@
+"""views"""
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.views import LoginView
@@ -16,7 +18,14 @@ class IndexView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
-        return render(request, "usermanagement/index.html")
+        if request.user.is_authenticated:
+            employ: Employee = Employee.objects.get(
+                username=request.user.username
+            )
+            return render(
+                request, "usermanagement/index.html", {"employ": employ}
+            )
+        return render(request, "usermanagement/index.html", {"employ": None})
 
 
 # pylint: disable=too-many-ancestors
@@ -33,6 +42,7 @@ class LogoutView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
         logout(request)
+        messages.info(request, "Erfolgreich abgemeldet")
         return redirect("index-view")
 
 
@@ -42,9 +52,11 @@ class DeleteEmployee(View):
     def post(self, request: HttpRequest, uid: int) -> HttpResponse:
         """post"""
         if not request.user.is_authenticated:
+            messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
         employee = Employee.objects.get(pk=uid)
         employee.delete()
+        messages.success(request, "Nutzer erfolgreich gelöscht")
         return redirect("list-employee-view")
 
 
@@ -76,8 +88,10 @@ class CreateUserView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
         if not request.user.is_authenticated:
+            messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
         if not employee_authentication(request.user, "usermanagement"):
+            messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
         form = CreateEmployeeform()
         return render(
@@ -87,8 +101,10 @@ class CreateUserView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
         """post"""
         if not request.user.is_authenticated:
+            messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
         if not employee_authentication(request.user, "usermanagement"):
+            messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
         form = CreateEmployeeform(data=request.POST)
         if not form.is_valid():
@@ -102,6 +118,7 @@ class CreateUserView(View):
         password = form.cleaned_data["password"]
         try:
             Employee.objects.get(username=username)
+            messages.warning(request, "Nutzer existiert bereits")
             return redirect("create-user-view")
         except Exception:
             employee = Employee(
@@ -113,4 +130,5 @@ class CreateUserView(View):
             employee.perm_offer = offer
             employee.perm_offer_file = offer_file
             employee.save()
+            messages.success(request, "Nutzer erfolgreich erstellt")
             return redirect("index-view")
