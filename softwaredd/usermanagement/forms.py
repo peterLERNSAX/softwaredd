@@ -6,7 +6,6 @@ class CreateEmployeeform(forms.Form):
     username = forms.CharField(label="Nutzername",max_length=200)
     password = forms.CharField(widget=forms.PasswordInput,max_length=64,min_length=4)
     check_password = forms.CharField(widget=forms.PasswordInput,max_length=64,min_length=4)
-    check_password = password
     usermanagement_field = forms.BooleanField(label="Nutzermanagemnt",required=False)
     layout_field = forms.BooleanField(label="Grundriss",required=False)
     database_field = forms.BooleanField(label="Datenbank",required=False)
