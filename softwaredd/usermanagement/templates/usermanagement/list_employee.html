@@ -1,80 +1,84 @@
 {% extends "usermanagement/index.html" %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+<link rel="stylesheet" href="{% static 'css/styleList.css' %}">
 {% endblock %}
 {% load bootstrap_icons %}
 {% block content %}
 <div class="row">
     {% for item in employees %}
-        <div class="col-sm-6 w-25 p-3">
-            <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                <div class="card-body p-5 text-center">
-                    <div class="mb-md-5 mt-md-4">
-                        <h2 class="fw-bold mb-2 text-uppercase">{{item.username}}</h2>
-                        <p class="text-white-50 mb-5">Der Nutzer hat folgende Berechtigungen:</p>
-                        <div class="p-2">
-                            {% if item.perm_usermanagement %}
-                                Nutzermanagement: {% bs_icon 'shield-check' color='white' size='1.5em' %}
-                            {% else %}
-                                Nutzermanagement: {% bs_icon 'shield-x' color='white' size='1.5em' %}
-                            {% endif %}
-                        </div>
-                        <div class="p-2">
-                            {% if item.perm_layout %}
-                                Grundriss: {% bs_icon 'shield-check' color='white' size='1.5em' %}
-                            {% else %}
-                                Grundriss: {% bs_icon 'shield-x' color='white' size='1.5em' %}
-                            {% endif %}
-                        </div>
-                        <div class="p-2">
-                            {% if item.perm_database %}
-                                Datenbank: {% bs_icon 'shield-check' color='white' size='1.5em' %}
-                            {% else %}
-                                Datenbank: {% bs_icon 'shield-x' color='white' size='1.5em' %}
-                            {% endif %}
-                        </div>
-                        <div class="p-2">
-                            {% if item.perm_offer %}
-                                Angebot: {% bs_icon 'shield-check' color='white' size='1.5em' %}
-                            {% else %}
-                                Angebot: {% bs_icon 'shield-x' color='white' size='1.5em' %}
-                            {% endif %}
-                        </div>
-                        <div class="p-2">
-                            {% if item.perm_offer_file %}
-                                Angebotsdatei: {% bs_icon 'shield-check' color='white' size='1.5em' %}
-                            {% else %}
-                                Angebotsdatei: {% bs_icon 'shield-x' color='white' size='1.5em' %}
-                            {% endif %}
-                        </div>
+    <div class="col-sm-6 w-25 p-3">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div class="mb-md-5 mt-md-4">
+                    <h2 class="fw-bold mb-2 text-uppercase">{{item.username}}</h2>
+                    <p class="text-white-50 mb-5">Der Nutzer hat folgende Berechtigungen:</p>
+                    <div class="p-2">
+                        {% if item.perm_usermanagement %}
+                        Nutzermanagement: {% bs_icon 'shield-check' color='white' size='1.5em' %}
+                        {% else %}
+                        Nutzermanagement: {% bs_icon 'shield-x' color='white' size='1.5em' %}
+                        {% endif %}
                     </div>
-                    <button type="button" class="btn btn-outline-light btn-lg px-5" data-bs-toggle="modal" data-bs-target="#deleteModal{{item}}">
-                        Löschen
-                    </button>
+                    <div class="p-2">
+                        {% if item.perm_layout %}
+                        Grundriss: {% bs_icon 'shield-check' color='white' size='1.5em' %}
+                        {% else %}
+                        Grundriss: {% bs_icon 'shield-x' color='white' size='1.5em' %}
+                        {% endif %}
+                    </div>
+                    <div class="p-2">
+                        {% if item.perm_database %}
+                        Datenbank: {% bs_icon 'shield-check' color='white' size='1.5em' %}
+                        {% else %}
+                        Datenbank: {% bs_icon 'shield-x' color='white' size='1.5em' %}
+                        {% endif %}
+                    </div>
+                    <div class="p-2">
+                        {% if item.perm_offer %}
+                        Angebot: {% bs_icon 'shield-check' color='white' size='1.5em' %}
+                        {% else %}
+                        Angebot: {% bs_icon 'shield-x' color='white' size='1.5em' %}
+                        {% endif %}
+                    </div>
+                    <div class="p-2">
+                        {% if item.perm_offer_file %}
+                        Angebotsdatei: {% bs_icon 'shield-check' color='white' size='1.5em' %}
+                        {% else %}
+                        Angebotsdatei: {% bs_icon 'shield-x' color='white' size='1.5em' %}
+                        {% endif %}
+                    </div>
                 </div>
-                <!-- Modal -->
-                <div class="modal fade" id="deleteModal{{item}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content bg-dark">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
-                            </div>
-                            <div class="modal-body">
-                                Willst du wirklich den Account von {{item.username}} löschen?
-                            </div>
-                            <div class="modal-footer">
-                                <form action="{% url 'delete-employee-view' item.pk %}" id="delte-form" method="post" name="my-form" ajax="true">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5">
-                                </form>
-                                <button type="button" class="btn btn-outline-light btn-lg px-5" data-bs-dismiss="modal">Abbruch</button>
-                            </div>
+                <button type="button" class="btn btn-outline-light btn-lg px-5" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal{{item}}">
+                    Löschen
+                </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal{{item}}" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-dark">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+                        </div>
+                        <div class="modal-body">
+                            Willst du wirklich den Account von {{item.username}} löschen?
+                        </div>
+                        <div class="modal-footer">
+                            <form action="{% url 'delete-employee-view' item.pk %}" id="delte-form" method="post"
+                                name="my-form" ajax="true">
+                                {% csrf_token %}
+                                <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5">
+                            </form>
+                            <button type="button" class="btn btn-outline-light btn-lg px-5"
+                                data-bs-dismiss="modal">Abbruch</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

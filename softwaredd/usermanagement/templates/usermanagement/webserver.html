@@ -1,19 +1,21 @@
 {% extends "usermanagement/index_webserver.html" %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/styleList.css' %}">
-    <link rel="stylesheet" href="{% static 'css/prism.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="{% static 'js/prism.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+<link rel="stylesheet" href="{% static 'css/prism.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="{% static 'js/prism.js' %}"></script>
 {% endblock %}
 {% block content %}
 <div class="text-white">
-    <div class="card bg-dark text-white m-5">
-        <div class="card-body p-5">
-            <h2><a id="use-case">Einrichtung einer Webseite auf einem Raspberry Pi 4</a></h2>
+	<div class="card bg-dark text-white m-5">
+		<div class="card-body p-5">
+			<h2><a id="use-case">Einrichtung einer Webseite auf einem Raspberry Pi 4</a></h2>
 			<div class="text">
 				<ol>
-					<h3><li>Grundlagen</li></h3><br><br>
+					<h3>
+						<li>Grundlagen</li>
+					</h3><br><br>
 
 					<div class="text">
 						• Software: Apache2 <br>
@@ -22,8 +24,10 @@
 						• benötigte html-, css-, script-Ordner auf dem Raspberry Pi <br>
 					</div><br>
 
-					<h3><li>Konfiguration vHost</li></h3><br><br>
-			<pre>
+					<h3>
+						<li>Konfiguration vHost</li>
+					</h3><br><br>
+					<pre>
 	$ mkdir /var/www/webserver<br>
 	$ chown -R www-data:www-data /var/www/webserver<br>
 	$ chmod -R 755 /var/www/webserver<br>
@@ -31,7 +35,7 @@
 	$ cp -r /PFAD/ZU/HTML-DATEIEN/ /var/www/webserver
 			</pre>
 
-			<pre class="divHtml w-50">
+					<pre class="divHtml w-50">
 				<code class="language-html">
 &lt;VirtualHost *80&gt;
 	ServerName webserver.steppencloud.de
@@ -41,25 +45,29 @@
 &lt;/VirtualHost&gt;
 				</code>
 			</pre>
-			<pre>
+					<pre>
 	$ a2ensite wiki.conf <br>
 	$ systemctl restart apache2.service<br>
 			</pre>
 				</ol>
 
 
-			<h2><a id="use-case">Aufsetzen eines Servers über VMware Workstation Player 16</a></h2>
-			<ol>
-				<h3><li>Grundlagen</li></h3><br><br>
+				<h2><a id="use-case">Aufsetzen eines Servers über VMware Workstation Player 16</a></h2>
+				<ol>
+					<h3>
+						<li>Grundlagen</li>
+					</h3><br><br>
 
-				<div class="text">
-					• OS: Debian 11 <br>
-					• Benutzername: user <br>
-					• Passwort: ****** <br>
-					• IP-Adresse: 192.168.72.129 <br>
-				</div><br>
-				<h3><li>Webserver</li></h3><br><br>
-			<pre>
+					<div class="text">
+						• OS: Debian 11 <br>
+						• Benutzername: user <br>
+						• Passwort: ****** <br>
+						• IP-Adresse: 192.168.72.129 <br>
+					</div><br>
+					<h3>
+						<li>Webserver</li>
+					</h3><br><br>
+					<pre>
 	$ apt install apache2 <br>
 	$ systemctl start apache2 <br>
 	$ mkdir /var/www/html/wiki <br>
@@ -67,12 +75,14 @@
 	$ chmod -R 755 /var/www/html/wiki <br>
 			</pre><br>
 
-				<h3><li>Erste HTML-Datei</li></h3><br><br>
+					<h3>
+						<li>Erste HTML-Datei</li>
+					</h3><br><br>
 
-			<pre>
+					<pre>
 	$ nano /var/www/html/wiki/index.html
 			</pre>
-				<pre class="divHtml w-50">
+					<pre class="divHtml w-50">
 					<code class="language-html">
 &lt;html&gt;
 	&lt;body&gt;
@@ -81,10 +91,10 @@
 &lt;/html&gt;
 					</code>
 				</pre><br>
-			<pre>
+					<pre>
 	$ nano /etc/apache2/sites-available/wiki.conf
 			</pre>
-				<pre class="divHtml w-50">
+					<pre class="divHtml w-50">
 					<code class="language-html">
 &lt;VirtualHost *80&gt;
 	DocumentRoot /var/www/html/wiki
@@ -93,14 +103,14 @@
 &lt;/VirtualHost&gt;
 					</code>
 				</pre><br>
-			<pre>	$ a2ensite wiki.conf</pre>
-			<pre>	$ systemctl restart apache2.service</pre>
-			<pre>	$ rm /etc/apache2/sites-enabled/000-default.conf</pre>
-		</ol>
+					<pre>	$ a2ensite wiki.conf</pre>
+					<pre>	$ systemctl restart apache2.service</pre>
+					<pre>	$ rm /etc/apache2/sites-enabled/000-default.conf</pre>
+				</ol>
 				<br>
-Webserver ist jetzt über IP-Adresse 192.168.72.129 auf Port 80 lokal abrufbar.
+				Webserver ist jetzt über IP-Adresse 192.168.72.129 auf Port 80 lokal abrufbar.
 			</div><br>
-        </div>
+		</div>
 	</div>
 </div>
 {% endblock %}
