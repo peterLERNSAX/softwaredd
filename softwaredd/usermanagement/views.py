@@ -1,62 +1,94 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.views import View
-from django.http import HttpRequest
-from .forms import CreateEmployeeform
-from.models import Employee
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.views import LoginView
+from django.http import HttpRequest
+from django.shortcuts import HttpResponse, redirect, render
+from django.views import View
+
+from .forms import CreateEmployeeform
+from .models import Employee
+
 # Create your views here.
+
 
 class IndexView(View):
     """Indexview"""
-    def get(self,request:HttpRequest)->HttpResponse:
-        """get"""
-        return render(request,"usermanagement/index.html")
 
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        return render(request, "usermanagement/index.html")
+
+
+# pylint: disable=too-many-ancestors
 class EmployeeLogin(LoginView):
     """Login"""
+
     template_name = "usermanagement/login.html"
     success_url = "{% url 'index-view'%}"
 
+
+class LogoutView(View):
+    """Logout"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        logout(request)
+        return redirect("index-view")
+
+
 class DeleteEmployee(View):
     """Delete Employee"""
-    def post(self,request:HttpRequest,uid:int)->HttpResponse:
+
+    def post(self, request: HttpRequest, uid: int) -> HttpResponse:
         """post"""
-        employee = Employee.objects.get(pk = uid)
+        if not request.user.is_authenticated:
+            return redirect("index-view")
+        employee = Employee.objects.get(pk=uid)
         employee.delete()
         return redirect("list-employee-view")
+
+
 class ListEmployee(View):
     """List all Employees"""
-    
-    def get(self,request:HttpRequest)->HttpResponse:
+
+    def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
         all_employee = Employee.objects.all()
-        return render(request,"usermanagement/list_employee.html",{"employees":all_employee})
+        return render(
+            request,
+            "usermanagement/list_employee.html",
+            {"employees": all_employee},
+        )
 
-def employee_authentication(user:Employee,check_value:str)->bool:
+
+def employee_authentication(user: Employee, check_value: str) -> bool:
     """check permissions of employee"""
-    check_user:Employee = Employee.objects.get(username=user.username)
+    check_user: Employee = Employee.objects.get(username=user.username)
     if check_value == "usermanagement":
         if not check_user.perm_usermanagement:
             return False
         return True
 
+
 class CreateUserView(View):
-    """Create user """
-    def get(self,request:HttpRequest)->HttpResponse:
+    """Create user"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
         if not request.user.is_authenticated:
             return redirect("index-view")
-        if not employee_authentication(request.user,"usermanagement"):
+        if not employee_authentication(request.user, "usermanagement"):
             return redirect("index-view")
         form = CreateEmployeeform()
-        return render(request,"usermanagement/create_user.html",{"form":form})
-   
-    def post(self,request:HttpRequest)->HttpResponse:
+        return render(
+            request, "usermanagement/create_user.html", {"form": form}
+        )
+
+    def post(self, request: HttpRequest) -> HttpResponse:
         """post"""
         if not request.user.is_authenticated:
             return redirect("index-view")
-        if not employee_authentication(request.user,"usermanagement"):
+        if not employee_authentication(request.user, "usermanagement"):
             return redirect("index-view")
         form = CreateEmployeeform(data=request.POST)
         if not form.is_valid():
@@ -72,7 +104,9 @@ class CreateUserView(View):
             Employee.objects.get(username=username)
             return redirect("create-user-view")
         except Exception:
-            employee = Employee(username=username,password= make_password(password))
+            employee = Employee(
+                username=username, password=make_password(password)
+            )
             employee.perm_usermanagement = usermanagement
             employee.perm_layout = layout
             employee.perm_database = database
