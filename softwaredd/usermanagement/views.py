@@ -196,8 +196,8 @@ class CreateUserView(View):
             return redirect("index-view")
         form = CreateEmployeeform(data=request.POST)
         if not form.is_valid():
-            messages.info(request, "Überprüfe die eingegebenen Daten!")
-            #time.sleep(5)
+            messages.info(request, "Überprüfe die eingegebenen Daten und beachte, dass die Passwörter identisch sein müssen!")
+            #time.sleep(5) sicher das wir das haben wollen? Es wird erst gesleept weil die message erst beim render nagezigt wird
             return redirect("create-user-view")
         username = form.cleaned_data["username"]
         usermanagement = form.cleaned_data["usermanagement_field"]
@@ -206,10 +206,6 @@ class CreateUserView(View):
         offer = form.cleaned_data["offer_field"]
         offer_file = form.cleaned_data["offer_file_field"]
         password = make_password(form.cleaned_data["password"])
-        check_password = form.cleaned_data["check_password"]
-        if not password == check_password:
-            messages.error(request, "Die eingegebenen Passwörter stimmen nicht überein!")
-            return redirect("create-user-view")
         try:
             Employee.objects.get(username=username)
             messages.warning(request, "Nutzer existiert bereits")

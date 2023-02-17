@@ -15,6 +15,9 @@ class CreateEmployeeform(forms.Form):
     def is_valid(self) -> bool:
         password1 = self.data.get("password")
         password2 = self.data.get("check_password")
+        print(password1)
+        print(password2)
         if password1 != password2:
+            print("abc")
             return False
         return super().is_valid()
