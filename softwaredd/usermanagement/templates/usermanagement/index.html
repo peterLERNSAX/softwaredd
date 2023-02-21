@@ -54,6 +54,12 @@
         <a class="nav-item nav-link" href="{% url 'logout-view' %}">Logout</a>
         {% endif %}
       </div>
+      <div class="form-check form-switch ms-auto me-3 bg-dark text-white">
+        <label class="form-check-label ms-3 bg-dark text-white" for="lightSwitch">
+          {% bs_icon 'sun' size='1.5em' color='white' %}
+        </label>
+        <input class="form-check-input bg-dark text-white" type="checkbox" id="lightSwitch" />
+      </div>
     </div>
   </nav>
   {% if messages %}
