@@ -119,6 +119,10 @@ class EmployeeLogin(LoginView):
     template_name = "usermanagement/login.html"
     success_url = "{% url 'index-view'%}"
 
+    def form_invalid(self, form) -> HttpResponse:
+        messages.warning(self.request,"Benutzerdaten nicht richtig!")
+        return super().form_invalid(form)
+
 
 class LogoutView(View):
     """Logout"""
