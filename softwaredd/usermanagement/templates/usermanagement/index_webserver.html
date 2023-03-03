@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-2">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-2 fixed-top">
     <a class="navbar-brand" href="#"> ITSystemHausDD GmbH</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,7 @@
   </div>
   {% endfor %}
   {% endif %}
+  <div style="margin-top:7%;">
   {% block content %}
   <div class="text-white m-3">
     <h2>Inhalsverzeichnis</h2>
@@ -56,6 +57,7 @@
     <p>• <a class="text-white" href="{% url 'notwendigedaten-view' %}">Notwendige Daten</a></p>
   </div>
   {% endblock %}
+</div>
 </body>
 
 </html>
