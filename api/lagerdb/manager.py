@@ -18,12 +18,12 @@ class DBManager:
         self.used_session.add(layout)
         self.used_session.commit()
 
-    def remove_layout(self, layout:Layout)->None:
+    def remove_layout(self, layout_id:int)->None:
         """
         Takes a layout
         Removes a layout from DB
         """
-        old_layout: Layout =self.used_session.query(Layout).get(layout.id)
+        old_layout: Layout =self.used_session.query(Layout).get(layout_id)
         self.used_session.delete(old_layout)
         self.used_session.commit()
 
@@ -41,12 +41,12 @@ class DBManager:
         self.used_session.add(offer)
         self.used_session.commit()
 
-    def remove_offer(self, offer:OfferFile)->None:
+    def remove_offer(self, offer_id:int)->None:
         """
         Takes a offer
         Removes the offer in the database
         """
-        old_offer: OfferFile = self.used_session.query(OfferFile).get(offer.id)
+        old_offer: OfferFile = self.used_session.query(OfferFile).get(offer_id)
         self.used_session.delete(old_offer)
         self.used_session.commit()
     
