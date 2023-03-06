@@ -20,4 +20,3 @@ class OfferFile(Base):
     id = Column(Integer,primary_key=True)
     pdf_text = Column(String)
 
-
