@@ -9,14 +9,6 @@ from pydantic import BaseModel
 app = FastAPI()
 db_manager = DBManager(used_session=session)
 
-
-class PermissionEnum(Enum):
-    usermanagemnt = 1
-    layout = 2
-    database = 3
-    offer = 4
-    offer_file = 5
-
 class Permission(BaseModel):
     """Class for permission"""
     usermanagement:bool
@@ -24,14 +16,6 @@ class Permission(BaseModel):
     database:bool
     offer:bool
     offer_file:bool
-
-    #def __init__(self,perm_dict:Dict[str,bool]) -> None:
-    #    self.usermanagement = perm_dict["usermanagement"]
-    #    self.layout = perm_dict["layout"]
-    #    self.database = perm_dict["database"]
-    #    self.offer = perm_dict["offer"]
-    #    self.offer_file = perm_dict["offer_file"]
-
 
 def check_permission(perm_obj:Permission,perm:int)->bool:
     """
