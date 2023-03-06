@@ -5,3 +5,5 @@
 */*.pyc
 */**/*.pyc
 
+api/lager.db
+example_json.txt
