@@ -7,11 +7,13 @@ from django.http import HttpRequest
 from django.shortcuts import HttpResponse, redirect, render
 from django.views import View
 from typing import Optional
-
+import requests
+from requests import Response
+import json
 from .forms import CreateEmployeeform
 from .models import Employee
 
-import time
+API_URL = "http://127.0.0.1:8000"
 
 # Create your views here.
 
@@ -169,6 +171,17 @@ def employee_authentication(user: Employee, check_value: str) -> bool:
         if not check_user.perm_usermanagement:
             return False
         return True
+
+class ListLayoutView(View):
+    """View for listing layouts"""
+
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        url = API_URL+"/dbApi/v1/post/layout/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        content:Response=requests.post(url,json=employee.get_permission_dict())
+        content_dict = (json.loads(content.content))
+        return render(request,"usermanagement/list_layout.html",{"content":content_dict["response"]})
 
 
 class CreateUserView(View):
