@@ -183,6 +183,18 @@ class ListLayoutView(View):
         content_dict = (json.loads(content.content))
         return render(request,"usermanagement/list_layout.html",{"content":content_dict["response"]})
 
+class ListOfferView(View):
+    """View for listing offers"""
+
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        url = API_URL+"/dbApi/v1/post/offer/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        content:Response=requests.post(url,json=employee.get_permission_dict())
+        content_dict = (json.loads(content.content))
+        return render(request,"usermanagement/list_offer.html",{"content":content_dict["response"]})
+
+    
 
 class CreateUserView(View):
     """Create user"""
