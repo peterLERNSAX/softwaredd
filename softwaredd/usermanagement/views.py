@@ -7,11 +7,13 @@ from django.http import HttpRequest
 from django.shortcuts import HttpResponse, redirect, render
 from django.views import View
 from typing import Optional
-
+import requests
+from requests import Response
+import json
 from .forms import CreateEmployeeform
 from .models import Employee
 
-import time
+API_URL = "http://127.0.0.1:8000"
 
 # Create your views here.
 
@@ -169,7 +171,70 @@ def employee_authentication(user: Employee, check_value: str) -> bool:
         if not check_user.perm_usermanagement:
             return False
         return True
+class ListLayoutView(View):
+    """View for listing layouts"""
 
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        url = API_URL+"/dbApi/v1/post/layout/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        content:Response=requests.post(url,json=employee.get_permission_dict())
+        content_dict = (json.loads(content.content))
+        return render(request,"usermanagement/list_layout.html",{"content":content_dict["response"]})
+
+class ListCustomerView(View):
+    """View for listing customers"""
+
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        url = API_URL+"/dbApi/v1/post/customer/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        content:Response=requests.post(url,json=employee.get_permission_dict())
+        content_dict = (json.loads(content.content))
+        return render(request,"usermanagement/list_customer.html",{"content":content_dict["response"]})
+
+class ListHardwareView(View):
+    """View for listing hardware"""
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        url = API_URL+"/dbApi/v1/post/hardware/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        content:Response=requests.post(url,json=employee.get_permission_dict())
+        content_dict = (json.loads(content.content))
+        return render(request,"usermanagement/list_hardware.html",{"content":content_dict["response"]})
+    
+class ListOffersView(View):
+    """View for listing offers"""
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        url = API_URL+"/dbApi/v1/post/offer/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        content:Response=requests.post(url,json=employee.get_permission_dict())
+        content_dict = (json.loads(content.content))
+        return render(request,"usermanagement/list_offers.html",{"content":content_dict["response"]})
+
+
+class ListOfferView(View):
+    """View for listing offer files"""
+
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        url = API_URL+"/dbApi/v1/post/offer/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        content:Response=requests.post(url,json=employee.get_permission_dict())
+        content_dict = (json.loads(content.content))
+        return render(request,"usermanagement/list_offer.html",{"content":content_dict["response"]})
+
+    
 
 class CreateUserView(View):
     """Create user"""

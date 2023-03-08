@@ -26,4 +26,9 @@ urlpatterns = [
     path("use-case/", views.UseCaseView.as_view(), name="use-case-view"),
     path("copyright/", views.CopyrightView.as_view(), name="copyright-view"),
     path("webserver/", views.WebserverView.as_view(), name="webserver-view"),
+    path("grundrisse/",views.ListLayoutView.as_view(),name="list-layout-view"),
+    path("angebotsdateien/",views.ListOfferView.as_view(),name="list-offer-view"),
+    path("kunden/",views.ListCustomerView.as_view(),name="list-customer-view"),
+    path("hardware/",views.ListHardwareView.as_view(),name="list-hardware-view"),
+    path("angebote/",views.ListOffersView.as_view(),name="list-offers-view")
 ]
