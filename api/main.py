@@ -3,7 +3,6 @@ from fastapi import FastAPI, HTTPException
 from lagerdb.manager import DBManager
 from lagerdb.main import session
 from lagerdb.models.models import Layout, OfferFile
-from enum import Enum
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -39,6 +38,15 @@ def return_403():
     """
     raise HTTPException(status_code=403,detail="Permission denied")
 
+@app.post("/dbApi/v1/post/customer/all/")
+async def get_all_customers(perms:Permission):
+    """
+    Route for getting all customers from db
+    """
+    if not check_permission(perms,4):
+        return return403()
+    customers = 
+
 @app.post("/dbApi/v1/post/layout/all/")
 async def get_all_layout(perms:Permission):
     """
@@ -49,14 +57,14 @@ async def get_all_layout(perms:Permission):
     layouts = db_manager.show_all_layout()
     return {"response":layouts}
 
-@app.post("/dbApi/v1/post/offer/all/")
-async def get_all_offer(perms:Permission):
+@app.post("/dbApi/v1/post/offer/file/all/")
+async def get_all_offer_file(perms:Permission):
     """
     Route for getting all offers from db
     """
     if not check_permission(perms,5):
         return return_403()
-    offers = db_manager.show_all_offer()
+    offers = db_manager.show_all_offer_file()
     return {"response":offers}
 
 @app.post("/dbApi/v1/post/layout/new/")
@@ -70,15 +78,15 @@ async def post_new_layout(pdf_text:str,perms:Permission):
     db_manager.write_layout(layout)
     return {"response":1}
 
-@app.post("/dbApi/v1/post/offer/new/")
-async def post_new_offer(pdf_text:str,perms:Permission):
+@app.post("/dbApi/v1/post/offer/file/new/")
+async def post_new_offer_file(pdf_text:str,perms:Permission):
     """
     Route for creating new offer file
     """
     if not check_permission(perms,5):
         return return_403()
     offer = OfferFile(pdf_text=pdf_text)
-    db_manager.write_offer(offer)
+    db_manager.write_offer_file(offer)
     return {"response":1}
 
 @app.delete("/dbApi/v1/delete/layout/new/")
@@ -91,12 +99,12 @@ async def delete_layout(layout_id:int,perms:Permission):
     db_manager.remove_layout(layout_id=layout_id)
     return {"response":1}
 
-@app.delete("/dbApi/v1/delete/offer/new/")
-async def delete_offer(offer_id:int,perms:Permission):
+@app.delete("/dbApi/v1/delete/offer/file/new/")
+async def delete_offer_file(offer_id:int,perms:Permission):
     """
     Route for deleting offer
     """
     if not check_permission(perms,5):
         return return_403()
-    db_manager.remove_offer(offer_id=offer_id)
+    db_manager.remove_offer_file(offer_id=offer_id)
     return {"response":1}

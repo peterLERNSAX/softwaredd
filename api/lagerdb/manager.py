@@ -1,6 +1,6 @@
 """DB Managers"""
 
-from .models.models import Layout, OfferFile
+from .models.models import Layout, OfferFile, Customer, Offer, Hardware
 from sqlalchemy.orm.session import Session
 from typing import Tuple
 
@@ -33,15 +33,41 @@ class DBManager:
         """
         return tuple(self.used_session.query(Layout).all())
 
-    def write_offer(self, offer:OfferFile)->None:
+    def show_all_customers(self)->Tuple[Customer,...]:
+        """
+        Resturns all Customers from Database
+        """
+        return tuple(self.used_session.query(Customer).all())
+
+    def show_all_hardware(self)->Tuple[Hardware,...]:
+        """
+        Returns all Hardware from Database
+        """
+        return tuple(self.used_session.query(Hardware).all())
+    
+    def show_all_offer(self)->Tuple[Offer]:
+        """
+        Returns all offers from Database
+        """
+        return tuple(self.used_session.query(Offer).all())
+    
+    def write_customer(self,customer:Customer)->None:
+        """
+        Takes a customer
+        Creates a Customer in the Database
+        """
+        self.used_session.add(customer)
+        self.used_session.commit()
+
+    def write_offer_file(self, offer:OfferFile)->None:
         """
         Takes a Offer
-        Creates a Offer in the Database
+        Creates a Offerfile in the Database
         """
         self.used_session.add(offer)
         self.used_session.commit()
 
-    def remove_offer(self, offer_id:int)->None:
+    def remove_offer_file(self, offer_id:int)->None:
         """
         Takes a offer
         Removes the offer in the database
@@ -50,7 +76,7 @@ class DBManager:
         self.used_session.delete(old_offer)
         self.used_session.commit()
     
-    def show_all_offer(self)->Tuple[OfferFile]:
+    def show_all_offer_file(self)->Tuple[OfferFile]:
         """
         Returns all offers from the database
         """
