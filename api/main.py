@@ -134,7 +134,20 @@ async def post_new_hardware(perms:Permission,name:str,
     db_manager.write_hardware(hardware)
     return {"response":1}
 
-
+@app.post("/dbApi/v1/post/offer/new/")
+async def post_new_offer(perms:Permission,
+                         customer:Optional[int]=None,
+                         offer_file:Optional[int]=None,
+                         layout:Optional[int]=None,
+                         description:Optional[str]=None):
+    """
+    Route for creating new offer
+    """
+    if not check_permission(perms,4):
+        return return_403()
+    offer = Offer(customer=customer,offer_file=offer_file,layout=layout,description=description)
+    db_manager.write_offer(offer)
+    return {"response":1}
 
 @app.post("/dbApi/v1/post/offer/file/new/")
 async def post_new_offer_file(pdf_text:str,perms:Permission):
