@@ -2,8 +2,9 @@
 from fastapi import FastAPI, HTTPException
 from lagerdb.manager import DBManager
 from lagerdb.main import session
-from lagerdb.models.models import Layout, OfferFile
+from lagerdb.models.models import Layout, OfferFile, Customer,Hardware,Offer
 from pydantic import BaseModel
+from typing import Optional
 
 app = FastAPI()
 db_manager = DBManager(used_session=session)
@@ -44,8 +45,30 @@ async def get_all_customers(perms:Permission):
     Route for getting all customers from db
     """
     if not check_permission(perms,4):
-        return return403()
-    customers = 
+        return return_403()
+    customers = db_manager.show_all_customers()
+    return {"response":customers}
+
+@app.post("/dbApi/v1/post/offer/all/")
+async def get_all_offer(perms:Permission):
+    """
+    Route for getting all offers from db
+    """
+    if not check_permission(perms,4):
+        return return_403()
+    offers = db_manager.show_all_offer()
+    return {"response":offers}
+
+@app.post("/dbApi/v1/post/hardware/all/")
+async def get_all_hardware(perms:Permission):
+    """
+    Route for getting all hardware from db
+    """
+    if not check_permission(perms,4):
+        return return_403()
+    hardware = db_manager.show_all_hardware()
+    return {"response":hardware}
+
 
 @app.post("/dbApi/v1/post/layout/all/")
 async def get_all_layout(perms:Permission):
@@ -76,6 +99,15 @@ async def post_new_layout(pdf_text:str,perms:Permission):
         return return_403()
     layout = Layout(pdf_text=pdf_text)
     db_manager.write_layout(layout)
+    return {"response":1}
+
+@app.post("/dbApi/v1/post/customer/new/")
+async def post_new_customer(firstname:str,sirname:str,email:str,perms:Permission,company_name:Optional[str]=None):
+    """Route for creating new customer"""
+    if not check_permission(perms,4):
+        return return_403()
+    customer = Customer(firstname=firstname,sirname=sirname,email=email,company_name=company_name)
+    db_manager.write_customer(customer)
     return {"response":1}
 
 @app.post("/dbApi/v1/post/offer/file/new/")

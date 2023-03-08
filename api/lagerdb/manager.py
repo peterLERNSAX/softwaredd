@@ -58,6 +58,22 @@ class DBManager:
         """
         self.used_session.add(customer)
         self.used_session.commit()
+    
+    def write_offer(self,offer:Offer)->None:
+        """
+        Takes a offer 
+        Cresates a offer in the Database
+        """
+        self.used_session.add(offer)
+        self.used_session.commit()
+
+    def write_hardware(self,hardware:Hardware)->None:
+        """
+        Takes Hardware
+        Creates hardware in Database
+        """
+        self.used_session.add(hardware)
+        self.used_session.commit()
 
     def write_offer_file(self, offer:OfferFile)->None:
         """

@@ -55,6 +55,6 @@ class Customer(Base):
     firstname = Column(String,nullable=False)
     sirname = Column(String,nullable=False)
     email = Column(String,nullable=False)
-    compay_name = Column(String,nullable=True)
+    company_name = Column(String,nullable=True)
 
 
