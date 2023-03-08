@@ -39,7 +39,7 @@ class Hardware(Base):
 
     id = Column(Integer,primary_key=True)
     name = Column(String,nullable=False)
-    descripption = Column(String,nullable=True)
+    description = Column(String,nullable=True)
     size = Column(String,nullable=True)
     weight = Column(Float,nullable=True)
     cable_length = Column(Float,nullable=True)

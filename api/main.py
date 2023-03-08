@@ -102,13 +102,39 @@ async def post_new_layout(pdf_text:str,perms:Permission):
     return {"response":1}
 
 @app.post("/dbApi/v1/post/customer/new/")
-async def post_new_customer(firstname:str,sirname:str,email:str,perms:Permission,company_name:Optional[str]=None):
+async def post_new_customer(firstname:str,sirname:str,email:str,
+                            perms:Permission,company_name:Optional[str]=None):
     """Route for creating new customer"""
     if not check_permission(perms,4):
         return return_403()
     customer = Customer(firstname=firstname,sirname=sirname,email=email,company_name=company_name)
     db_manager.write_customer(customer)
     return {"response":1}
+
+@app.post("/dbApi/v1/post/hardware/new/")
+async def post_new_hardware(perms:Permission,name:str,
+                            description:Optional[str]=None,
+                            size:Optional[str]=None,
+                            weight:Optional[float]=None,
+                            cable_length:Optional[float]=None,
+                            power_consumption:Optional[float]=None,
+                            workplace_ergonomics:Optional[str]=None):
+    """
+    Route for creating new hardware
+    """
+    if not check_permission(perms,4):
+        return return_403()   
+    hardware = Hardware(name=name,
+                        description=description,
+                        size=size,
+                        weight=weight,
+                        cable_length=cable_length,
+                        power_consumption=power_consumption,
+                        workplace_ergonomics=workplace_ergonomics)
+    db_manager.write_hardware(hardware)
+    return {"response":1}
+
+
 
 @app.post("/dbApi/v1/post/offer/file/new/")
 async def post_new_offer_file(pdf_text:str,perms:Permission):
