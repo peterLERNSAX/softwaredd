@@ -56,5 +56,3 @@ class Customer(Base):
     sirname = Column(String,nullable=False)
     email = Column(String,nullable=False)
     company_name = Column(String,nullable=True)
-
-

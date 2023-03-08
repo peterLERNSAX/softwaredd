@@ -19,5 +19,3 @@ class Employee(User):
             "offer":self.perm_offer,
             "offer_file":self.perm_offer_file,
                 }
-
-
