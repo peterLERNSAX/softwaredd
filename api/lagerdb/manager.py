@@ -92,6 +92,33 @@ class DBManager:
         self.used_session.delete(old_offer)
         self.used_session.commit()
     
+    def remove_customer(self,customer_id:int)->None:
+        """
+        Takes a customer
+        Removes the customer from the Database
+        """
+        old_customer: Customer = self.used_session.query(Customer).get(customer_id)
+        self.used_session.delete(old_customer)
+        self.used_session.commit()
+    
+    def remove_offer(self,offer_id:int)->None:
+        """
+        Takes an offer
+        Removes the offer from the database
+        """
+        old_offer:Offer = self.used_session.query(Offer).get(offer_id)
+        self.used_session.delete(old_offer)
+        self.used_session.commit()
+    
+    def remove_hardware(self,hardware_id:int)->None:
+        """
+        Takes Hardware
+        Removes the Hardware from the database
+        """
+        old_hardware:Hardware = self.used_session.query(Hardware).get(hardware_id)
+        self.used_session.delete(old_hardware)
+        self.used_session.commit()
+
     def show_all_offer_file(self)->Tuple[OfferFile]:
         """
         Returns all offers from the database

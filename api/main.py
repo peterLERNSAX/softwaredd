@@ -160,7 +160,37 @@ async def post_new_offer_file(pdf_text:str,perms:Permission):
     db_manager.write_offer_file(offer)
     return {"response":1}
 
-@app.delete("/dbApi/v1/delete/layout/new/")
+@app.delete("/dbApi/v1/delete/customer/")
+async def delete_cutomer(customer_id:int,perms:Permission):
+    """
+    Route for deleting customer
+    """
+    if not check_permission(perms,3):
+        return return_403()
+    db_manager.remove_customer(customer_id)
+    return {"response":1}
+
+@app.delete("/dbApi/v1/delete/offer/")
+async def delete_offer(offer_id:int,perms:Permission):
+    """
+    Route for deleting offers
+    """
+    if not check_permission(perms,4):
+        return return_403()
+    db_manager.remove_offer(offer_id)
+    return {"response":1}
+
+@app.delete("/dbApi/v1/delete/hardware/")
+async def delete_hardware(hardware_id:int,perms:Permission):
+    """
+    Route for deleting hardware
+    """
+    if not check_permission(perms,3):
+        return return_403()
+    db_manager.remove_hardware(hardware_id)
+    return {"response":1}
+
+@app.delete("/dbApi/v1/delete/layout/")
 async def delete_layout(layout_id:int,perms:Permission):
     """
     Route for deleting layout
