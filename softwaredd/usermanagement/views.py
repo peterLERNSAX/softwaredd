@@ -6,11 +6,11 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpRequest
 from django.shortcuts import HttpResponse, redirect, render
 from django.views import View
-from typing import Optional
+from typing import Optional, Any
 import requests
 from requests import Response
 import json
-from .forms import CreateEmployeeform
+from .forms import CreateEmployeeform, CreateCustomerForm, CreateHardwareForm, CreateOfferForm
 from .models import Employee
 
 API_URL = "http://127.0.0.1:8000"
@@ -180,7 +180,8 @@ class ListLayoutView(View):
         employee:Employee = Employee.objects.get(pk=request.user.pk)
         content:Response=requests.post(url,json=employee.get_permission_dict())
         content_dict = (json.loads(content.content))
-        return render(request,"usermanagement/list_layout.html",{"content":content_dict["response"]})
+        employ = get_employee(request)
+        return render(request,"usermanagement/list_layout.html",{"content":content_dict["response"],"employ":employ})
 
 class ListCustomerView(View):
     """View for listing customers"""
@@ -194,7 +195,8 @@ class ListCustomerView(View):
         employee:Employee = Employee.objects.get(pk=request.user.pk)
         content:Response=requests.post(url,json=employee.get_permission_dict())
         content_dict = (json.loads(content.content))
-        return render(request,"usermanagement/list_customer.html",{"content":content_dict["response"]})
+        employ = get_employee(request)
+        return render(request,"usermanagement/list_customer.html",{"content":content_dict["response"],"employ":employ})
 
 class ListHardwareView(View):
     """View for listing hardware"""
@@ -207,8 +209,150 @@ class ListHardwareView(View):
         employee:Employee = Employee.objects.get(pk=request.user.pk)
         content:Response=requests.post(url,json=employee.get_permission_dict())
         content_dict = (json.loads(content.content))
-        return render(request,"usermanagement/list_hardware.html",{"content":content_dict["response"]})
+        employ = get_employee(request)
+        return render(request,"usermanagement/list_hardware.html",{"content":content_dict["response"],"employ":employ})
+
+class CreateOfferView(View):
+    """View for creating an offer"""
+
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        if not employee.perm_offer:
+            messages.warning(request,"Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateOfferForm()
+        employ = get_employee(request)
+        return render(request,"usermanagement/create_offer.html",{"form":form,"employ":employ})
+
+    def post(self,request:HttpRequest)->HttpResponse:
+        """post"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        if not employee.perm_offer:
+            messages.warning(request,"Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateOfferForm(data=request.POST)
+        
+        customer = form.data["customer"]
+        offer_file = form.data["offer_file"]
+        layout = form.data["layout"]
+        description = form["description"]
+        data = {"customer":customer,"offer_file":offer_file,"layout":layout,"description":description}
+        if customer == "":
+            data.pop("customer")
+        if offer_file =="":
+            data.pop("offer_file")
+        if layout =="":
+            data.pop("layout")
+        if description =="":
+            data.pop("description")
+        url = API_URL+"/dbApi/v1/post/offer/new/"
+        content:Response=requests.post(url,json=employee.get_permission_dict(),params=data)
+        assert(content,Response)
+        if not content.status_code == 200:
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("create-offer-view")
+        return redirect("list-offer-view")
+        
+class CreateCustomerView(View):
+    """View for creating customers"""
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        if not employee.perm_database:
+            messages.warning(request,"Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateCustomerForm()
+        employ = get_employee(request)
+        return render(request,"usermanagement/create_customer.html",{"form":form,"employ":employ})
     
+    def post(self,request:HttpRequest)->HttpResponse:
+        """post"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        if not employee.perm_database:
+            messages.warning(request,"Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateCustomerForm(data=request.POST)
+        firstname = form.data["firstname"]
+        sirname = form.data["sirname"]
+        email = form.data["email"]
+        data = {"firstname":firstname,"sirname":sirname,"email":email}
+        company_name = form.data["company_name"]
+        if company_name != "":
+            data+= {"company_name":company_name}
+        url = API_URL+"/dbApi/v1/post/customer/new/"
+        content:Response=requests.post(url,json=employee.get_permission_dict(),params=data)
+        assert(content,Response)
+        if not content.status_code == 200:
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("create-customer-view")
+        return redirect("list-customer-view")
+
+class CreateHardwareView(View):
+    """View for creating Hardware"""
+    def get(self,request:HttpRequest)->HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        if not employee.perm_database:
+            messages.warning(request,"Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateHardwareForm()
+        employ = get_employee(request)
+        return render(request,"usermanagement/create_hardware.html",{"form":form,"employ":employ})
+    
+    def post(self,request:HttpRequest)->HttpResponse:
+        """post"""
+        if not request.user.is_authenticated:
+            messages.warning(request,"Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        if not employee.perm_database:
+            messages.warning(request,"Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateHardwareForm(data=request.POST)
+        name:str = form.data["name"]
+        data = {"name":name,}
+        description:Optional[str] = form.data["description"]
+        if description != "":
+            data += {"description":description}
+        size:Optional[str] = form.data["size"]
+        if size != "":
+            data += {"size":size}
+        weight:Optional[float] = form.data["weight"]
+        if weight != "":
+            data += {"weight":weight}
+        cable_length:Optional[float] = form.data["cable_length"]
+        if cable_length != "":
+            data+={"cable_length":cable_length}
+        power_consumption:Optional[float]=form.data["power_consumption"]
+        if power_consumption != "":
+            data+={"power_consumption":power_consumption}
+        workplace_ergonomics:Optional[str]=form.data["workplace_ergonomics"]
+        if workplace_ergonomics != "":
+            data+={"workplace_ergonomics":workplace_ergonomics}
+        url = API_URL+"/dbApi/v1/post/hardware/new/"
+        content:Response=requests.post(url,json=employee.get_permission_dict(),params=data)
+        assert(content,Response)
+        if not content.status_code == 200:
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("create-hardware-view")
+        return redirect("list-hardware-view")
+
 class ListOffersView(View):
     """View for listing offers"""
     def get(self,request:HttpRequest)->HttpResponse:
@@ -220,7 +364,8 @@ class ListOffersView(View):
         employee:Employee = Employee.objects.get(pk=request.user.pk)
         content:Response=requests.post(url,json=employee.get_permission_dict())
         content_dict = (json.loads(content.content))
-        return render(request,"usermanagement/list_offers.html",{"content":content_dict["response"]})
+        employ = get_employee(request)
+        return render(request,"usermanagement/list_offers.html",{"content":content_dict["response"],"employ":employ})
 
 
 class ListOfferView(View):
@@ -232,9 +377,9 @@ class ListOfferView(View):
         employee:Employee = Employee.objects.get(pk=request.user.pk)
         content:Response=requests.post(url,json=employee.get_permission_dict())
         content_dict = (json.loads(content.content))
-        return render(request,"usermanagement/list_offer.html",{"content":content_dict["response"]})
+        employ = get_employee(request)
+        return render(request,"usermanagement/list_offer.html",{"content":content_dict["response"],"employ":employ})
 
-    
 
 class CreateUserView(View):
     """Create user"""

@@ -1,0 +1,9 @@
+{% extends "usermanagement/index.html" %}
+{% load static %}
+{% block content %}
+<form action="{% url 'create-customer-view' %}" method="post">
+    {{form.as_p}}
+    {%csrf_token%}
+    <button class="btn btn-outline-light btn-lg px-5 mt-3" type="submit">Erstellen</button>
+</form>
+{% endblock %}
