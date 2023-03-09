@@ -20,77 +20,59 @@
     });
 </script>
 <form class="form-inline nav-item d-flex">
-    <input class="form-control me-2 w-25 text-center m-3 bg-dark text-white btn-outline-light btn-lg" id="filter" type="search" placeholder="Search" aria-label="Search" autocomplete="on">
+    <input class="form-control me-2 w-25 text-center m-3 bg-dark text-white btn-outline-light btn-lg" id="filter" type="search" placeholder="Suchen..." aria-label="Search" autocomplete="on">
 </form>
 <div class="row mx-5" id="mycard">
     {% for customer in content %}
-    <div class="col-sm-6 w-100 p-3">
+    <div class="col-sm-6 w-50 p-4">
         <div class="card bg-dark text-white" style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);" id="card">
             <div class="card-body p-5 text-center">
                 <div class="mb-md-5 mt-md-4">
                     <h2 class="fw-bold mb-2 text-uppercase">{{customer.sirname}}, {{customer.firstname}}<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">{{customer.id}}</span></h2>
                     <p class="text-white-50 mb-5 text-muted">Für weitere Infos über Icon hovern.</p>
                     <div class="p-2 text-start">
-                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Gewicht">
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Kundenemail">
                             {% bs_icon 'envelope-fill' color='white' size='1.5em' %} {{customer.email}}
                         </div>
                     </div>
                     <div class="p-2 text-start">
-                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Stromverbrauch">
-                            {% bs_icon 'plug-fill' color='white' size='1.5em' %} {{customer.power_consumption}} Watt
-                        </div>
-                    </div>
-                    <div class="p-2 text-start">
-                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Größe">
-                            {% bs_icon 'aspect-ratio-fill' color='white' size='1.5em' %} {{customer.size}}
-                        </div>
-                    </div>
-                    <div class="p-2 text-start">
-                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Kabellänge">
-                            {% bs_icon 'plugin' color='white' size='1.5em' %} {{customer.cable_length}} m
-                        </div>
-                    </div>
-                    <div class="p-2 text-start">
-                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Arbeitsplatzergonomie">
-                            {% bs_icon 'person-workspace' color='white' size='1.5em' %} {{customer.workplace_ergonomics}}
-                        </div>
-                    </div>
-                    <div class="p-2 text-start">
-                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Beschreibung">
-                            Beschreibung: <br>
-                            {{customer.description}}
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Unternehmensname">
+                            {% bs_icon 'buildings-fill' color='white' size='1.5em' %} {{customer.company_name}}
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-light btn-lg px-5" data-bs-toggle="modal"
+                <button type="button" class="btn btn-outline-light btn-lg px-5 mx-4" data-bs-toggle="modal" href="mailto:{{customer.email}}">
+                    {% bs_icon 'send-fill' color='white' size='1.5em' %} Mailto
+                </button>
+                <button type="button" class="btn btn-outline-light btn-lg px-5 mx-4" data-bs-toggle="modal"
                 data-bs-target="#deleteModal{{customer}}">
-                Löschen
-            </button>
+                    {% bs_icon 'trash-fill' color='white' size='1.5em' %} Löschen
+                </button>
+            </div>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="deleteModal{{customer}}" tabindex="-1" aria-labelledby="deleteModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+                    </div>
+                    <div class="modal-body">
+                        Willst du wirklich den Account von {{customer.name}} löschen?
+                    </div>
+                    <div class="modal-footer">
+                        <!--hier würde das Form ding stehen, schau mal bei list_employee-->
+                        {% csrf_token %}
+                        <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
+                        </form>
+                        <button type="button" class="btn btn-outline-light btn-lg px-5"
+                        data-bs-dismiss="modal">Abbruch</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    Willst du wirklich den Account von {{customer.name}} löschen?
-                </div>
-                <div class="modal-footer">
-                    <!--hier würde das Form ding stehen, schau mal bei list_employee-->
-                    {% csrf_token %}
-                    <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
-                </form>
-                <button type="button" class="btn btn-outline-light btn-lg px-5"
-                data-bs-dismiss="modal">Abbruch</button>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-{% endfor %}
+    {% endfor %}
 </div>
 {% endblock %}
