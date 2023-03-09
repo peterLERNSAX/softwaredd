@@ -1,5 +1,10 @@
 {% extends "usermanagement/index.html" %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+{% endblock %}
+{% load bootstrap_icons %}
 {% block content %}
 {%for layout in content%}
 {{layout}}

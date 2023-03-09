@@ -47,6 +47,7 @@
             <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-layout-view' %}">Grundrisse auflisten</a></li>
             {% endif %}
             {% if employ.perm_database %}
+            <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-customer-view' %}">Kunden auflisten</a></li>
             <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-hardware-view' %}">Hardware auflisten</a></li>
             {% endif %}
             {% if employ.perm_offer_file %}
