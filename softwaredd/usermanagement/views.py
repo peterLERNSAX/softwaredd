@@ -373,7 +373,7 @@ class ListOfferView(View):
 
     def get(self,request:HttpRequest)->HttpResponse:
         """get"""
-        url = API_URL+"/dbApi/v1/post/offer/all/"
+        url = API_URL+"/dbApi/v1/post/offer/file/all/"
         employee:Employee = Employee.objects.get(pk=request.user.pk)
         content:Response=requests.post(url,json=employee.get_permission_dict())
         content_dict = (json.loads(content.content))
