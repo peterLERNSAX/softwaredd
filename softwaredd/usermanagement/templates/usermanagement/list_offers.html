@@ -1,7 +1,7 @@
-{% extends "usermanagement/index_webserver.html" %}
+{% extends "usermanagement/index.html" %}
 {% load static %}
 {% block content %}
-{%for layout in content%}
-{{layout}}
+{%for offers in content%}
+{{offers}}
 {%endfor%}
 {% endblock %}

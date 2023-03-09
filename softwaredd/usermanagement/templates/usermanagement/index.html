@@ -33,7 +33,30 @@
         {% endif %}
         {% if employ.perm_usermanagement %}
         <a class="nav-item nav-link" href="{% url 'create-user-view' %}">Nutzer erstellen</a>
-        <a class="nav-item nav-link" href="{% url 'list-employee-view' %}">Nutzer auflisten</a>
+        {% endif %}
+        {% if employ.perm_usermanagement or employ.perm_layout or employ.perm_database or employ.perm_offer or employ.perm_offer_file %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Datenbankabfragen
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+            {% if employ.perm_usermanagement %}
+            <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-employee-view' %}">Nutzer auflisten</a></li>
+            {% endif %}
+            {% if employ.perm_layout %}
+            <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-layout-view' %}">Grundrisse auflisten</a></li>
+            {% endif %}
+            {% if employ.perm_database %}
+            <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-hardware-view' %}">Hardware auflisten</a></li>
+            {% endif %}
+            {% if employ.perm_offer_file %}
+            <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-offer-view' %}">Angebotsdateien auflisten</a></li>
+            {% endif %}
+            {% if employ.perm_offer %}
+            <li><a class="dropdown-item nav-link bg-dark" href="{% url 'list-offers-view' %}">Angebote auflisten</a></li>
+            {% endif %}
+          </ul>
+        </li>
         {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -1,7 +1,96 @@
-{% extends "usermanagement/index_webserver.html" %}
+{% extends "usermanagement/index.html" %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+{% endblock %}
+{% load bootstrap_icons %}
 {% block content %}
-{%for layout in content%}
-{{layout}}
-{%endfor%}
+<script type='text/javascript'
+    src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'>
+</script>
+<script>
+    $(function(){
+        $("#filter").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#mycard > div").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<form class="form-inline nav-item d-flex">
+    <input class="form-control me-2 w-25 text-center m-3 bg-dark text-white btn-outline-light btn-lg" id="filter" type="search" placeholder="Search" aria-label="Search" autocomplete="on">
+</form>
+<div class="row mx-5" id="mycard">
+    {% for layout in content %}
+    <div class="col-sm-6 w-50 p-3">
+        <div class="card bg-dark text-white" style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);" id="card">
+            <div class="card-body p-5 text-center">
+                <div class="mb-md-5 mt-md-4">
+                    <h2 class="fw-bold mb-2 text-uppercase">{{layout.name}}<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">{{layout.id}}</span></h2>
+                    <p class="text-white-50 mb-5 text-muted">Für weitere Infos über Icon hovern.</p>
+                    <div class="p-2 text-start">
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Gewicht">
+                            {% bs_icon 'hammer' color='white' size='1.5em' %} {{layout.weight}} kg 
+                        </div>
+                    </div>
+                    <div class="p-2 text-start">
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Stromverbrauch">
+                            {% bs_icon 'plug-fill' color='white' size='1.5em' %} {{layout.power_consumption}} Watt
+                        </div>
+                    </div>
+                    <div class="p-2 text-start">
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Größe">
+                            {% bs_icon 'aspect-ratio-fill' color='white' size='1.5em' %} {{layout.size}}
+                        </div>
+                    </div>
+                    <div class="p-2 text-start">
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Kabellänge">
+                            {% bs_icon 'plugin' color='white' size='1.5em' %} {{layout.cable_length}} m
+                        </div>
+                    </div>
+                    <div class="p-2 text-start">
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Arbeitsplatzergonomie">
+                            {% bs_icon 'person-workspace' color='white' size='1.5em' %} {{layout.workplace_ergonomics}}
+                        </div>
+                    </div>
+                    <div class="p-2 text-start">
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Beschreibung">
+                            Beschreibung: <br>
+                            {{layout.description}}
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-light btn-lg px-5" data-bs-toggle="modal"
+                data-bs-target="#deleteModal{{layout}}">
+                Löschen
+            </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal{{layout}}" tabindex="-1" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+                </div>
+                <div class="modal-body">
+                    Willst du wirklich den Account von {{layout.name}} löschen?
+                </div>
+                <div class="modal-footer">
+                    <!--hier würde das Form ding stehen, schau mal bei list_employee-->
+                    {% csrf_token %}
+                    <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
+                </form>
+                <button type="button" class="btn btn-outline-light btn-lg px-5"
+                data-bs-dismiss="modal">Abbruch</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
 {% endblock %}
