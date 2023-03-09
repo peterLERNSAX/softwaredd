@@ -24,15 +24,15 @@
 </form>
 <div class="row mx-5" id="mycard">
     {% for customer in content %}
-    <div class="col-sm-6 w-50 p-3">
+    <div class="col-sm-6 w-100 p-3">
         <div class="card bg-dark text-white" style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);" id="card">
             <div class="card-body p-5 text-center">
                 <div class="mb-md-5 mt-md-4">
-                    <h2 class="fw-bold mb-2 text-uppercase">{{customer.name}}<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">{{customer.id}}</span></h2>
+                    <h2 class="fw-bold mb-2 text-uppercase">{{customer.sirname}}, {{customer.firstname}}<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">{{customer.id}}</span></h2>
                     <p class="text-white-50 mb-5 text-muted">Für weitere Infos über Icon hovern.</p>
                     <div class="p-2 text-start">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Gewicht">
-                            {% bs_icon 'hammer' color='white' size='1.5em' %} {{customer.weight}} kg 
+                            {% bs_icon 'envelope-fill' color='white' size='1.5em' %} {{customer.email}}
                         </div>
                     </div>
                     <div class="p-2 text-start">
