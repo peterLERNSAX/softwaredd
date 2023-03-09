@@ -21,3 +21,27 @@ class CreateEmployeeform(forms.Form):
             print("abc")
             return False
         return super().is_valid()
+    
+class CreateCustomerForm(forms.Form):
+    """CustomerForm"""
+    firstname = forms.CharField(label="Vorname",max_length=200)
+    sirname = forms.CharField(label ="Nachname",max_length=200)
+    email = forms.EmailField(label="Email")
+    company_name = forms.CharField(label="Firmenname",required=False,max_length=200)
+
+class CreateHardwareForm(forms.Form):
+    """HArdware Form"""
+    name = forms.CharField(label="Name",max_length=200)
+    description = forms.CharField(label="Beschreibung",max_length=200,required=False)
+    size = forms.CharField(label="Größe",max_length=200,required=False)
+    weight = forms.FloatField(label="Gewicht",required=False)
+    cable_length = forms.FloatField(label="Kabellänge",required=False)
+    power_consumption = forms.FloatField(label="Stromverbrauch",required=False)
+    workplace_ergonomics = forms.CharField(label="Arbeitsplatzergonomie",max_length=200,required=False)
+
+class CreateOfferForm(forms.Form):
+    """Offer Form"""
+    customer = forms.IntegerField(required=False)
+    offer_file = forms.IntegerField(required=False)
+    layout = forms.IntegerField(required=False)
+    description = forms.CharField(max_length=200,required=False)

@@ -30,5 +30,8 @@ urlpatterns = [
     path("angebotsdateien/",views.ListOfferView.as_view(),name="list-offer-view"),
     path("kunden/",views.ListCustomerView.as_view(),name="list-customer-view"),
     path("hardware/",views.ListHardwareView.as_view(),name="list-hardware-view"),
-    path("angebote/",views.ListOffersView.as_view(),name="list-offers-view")
+    path("angebote/",views.ListOffersView.as_view(),name="list-offers-view"),
+    path("hardware/erstellen/", views.CreateHardwareView.as_view(),name="create-hardware-view"),
+    path("kunden/erstellen/",views.CreateCustomerView.as_view(),name="create-customer-view"),
+    path("angebote/erstellen/",views.CreateOfferView.as_view(),name="create-offer-view"),
 ]

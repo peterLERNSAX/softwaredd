@@ -123,7 +123,7 @@ async def post_new_hardware(perms:Permission,name:str,
     Route for creating new hardware
     """
     if not check_permission(perms,4):
-        return return_403()   
+        return return_403()
     hardware = Hardware(name=name,
                         description=description,
                         size=size,
