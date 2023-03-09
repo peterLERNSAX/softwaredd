@@ -224,9 +224,21 @@ class CreateOfferView(View):
         if not employee.perm_offer:
             messages.warning(request,"Unzureichende Berechtigungen")
             return redirect("index-view")
+        url_customer = API_URL+"/dbApi/v1/post/customer/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        customers:Response=requests.post(url_customer,json=employee.get_permission_dict())
+        customer_dict = (json.loads(customers.content))
+
+        url_layout = API_URL+"/dbApi/v1/post/layout/all/"
+        layouts:Response=requests.post(url_layout,json=employee.get_permission_dict())
+        layout_dict = (json.loads(layouts.content))
+
+        url_offer_files = API_URL+"/dbApi/v1/post/offer/file/all/"
+        offer_files:Response=requests.post(url_offer_files,json=employee.get_permission_dict())
+        offer_files_dict = (json.loads(offer_files.content))
         form = CreateOfferForm()
         employ = get_employee(request)
-        return render(request,"usermanagement/create_offer.html",{"form":form,"employ":employ})
+        return render(request,"usermanagement/create_offer.html",{"form":form,"employ":employ,"customers":customer_dict["response"],"layouts":layout_dict["response"],"offer_files":offer_files_dict["response"]})
 
     def post(self,request:HttpRequest)->HttpResponse:
         """post"""
@@ -238,7 +250,6 @@ class CreateOfferView(View):
             messages.warning(request,"Unzureichende Berechtigungen")
             return redirect("index-view")
         form = CreateOfferForm(data=request.POST)
-        
         customer = form.data["customer"]
         offer_file = form.data["offer_file"]
         layout = form.data["layout"]
@@ -288,10 +299,10 @@ class CreateCustomerView(View):
         firstname = form.data["firstname"]
         sirname = form.data["sirname"]
         email = form.data["email"]
-        data = {"firstname":firstname,"sirname":sirname,"email":email}
         company_name = form.data["company_name"]
-        if company_name != "":
-            data+= {"company_name":company_name}
+        data = {"firstname":firstname,"sirname":sirname,"email":email,"company_name":company_name}
+        if company_name == "":
+            data.pop("company_name")
         url = API_URL+"/dbApi/v1/post/customer/new/"
         content:Response=requests.post(url,json=employee.get_permission_dict(),params=data)
         assert(content,Response)
@@ -326,25 +337,27 @@ class CreateHardwareView(View):
             return redirect("index-view")
         form = CreateHardwareForm(data=request.POST)
         name:str = form.data["name"]
-        data = {"name":name,}
         description:Optional[str] = form.data["description"]
-        if description != "":
-            data += {"description":description}
         size:Optional[str] = form.data["size"]
-        if size != "":
-            data += {"size":size}
         weight:Optional[float] = form.data["weight"]
-        if weight != "":
-            data += {"weight":weight}
         cable_length:Optional[float] = form.data["cable_length"]
-        if cable_length != "":
-            data+={"cable_length":cable_length}
         power_consumption:Optional[float]=form.data["power_consumption"]
-        if power_consumption != "":
-            data+={"power_consumption":power_consumption}
         workplace_ergonomics:Optional[str]=form.data["workplace_ergonomics"]
-        if workplace_ergonomics != "":
-            data+={"workplace_ergonomics":workplace_ergonomics}
+        data = {"name":name,"description":description,"size":size,
+                "weight":weight,"cable_length":cable_length,"power_consumption":power_consumption,
+                "workplace_ergonomics":workplace_ergonomics}
+        if description == "":
+            data.pop("description")
+        if size == "":
+            data.pop("size")
+        if weight == "":
+            data.pop("weight")
+        if cable_length == "":
+            data.pop("cable_length")
+        if power_consumption == "":
+            data.pop("power_consumption")
+        if workplace_ergonomics == "":
+            data.pop("workplace_ergonomics")
         url = API_URL+"/dbApi/v1/post/hardware/new/"
         content:Response=requests.post(url,json=employee.get_permission_dict(),params=data)
         assert(content,Response)
@@ -364,8 +377,20 @@ class ListOffersView(View):
         employee:Employee = Employee.objects.get(pk=request.user.pk)
         content:Response=requests.post(url,json=employee.get_permission_dict())
         content_dict = (json.loads(content.content))
+        url_customer = API_URL+"/dbApi/v1/post/customer/all/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        customers:Response=requests.post(url_customer,json=employee.get_permission_dict())
+        customer_dict = (json.loads(customers.content))
+
+        url_layout = API_URL+"/dbApi/v1/post/layout/all/"
+        layouts:Response=requests.post(url_layout,json=employee.get_permission_dict())
+        layout_dict = (json.loads(layouts.content))
+
+        url_offer_files = API_URL+"/dbApi/v1/post/offer/file/all/"
+        offer_files:Response=requests.post(url_offer_files,json=employee.get_permission_dict())
+        offer_files_dict = (json.loads(offer_files.content))
         employ = get_employee(request)
-        return render(request,"usermanagement/list_offers.html",{"content":content_dict["response"],"employ":employ})
+        return render(request,"usermanagement/list_offers.html",{"content":content_dict["response"],"employ":employ,"customers":customer_dict["response"],"layouts":layout_dict["response"],"offer_files":offer_files_dict["response"]})
 
 
 class ListOfferView(View):
