@@ -6,28 +6,29 @@
 {% endblock %}
 {% load bootstrap_icons %}
 {% block content %}
-<script type='text/javascript'
-    src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'>
 </script>
 <script>
-    $(function(){
-        $("#filter").on("keyup", function() {
+    $(function () {
+        $("#filter").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#mycard > div").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $("#mycard > div").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
     });
 </script>
 <form class="form-inline nav-item d-flex">
-    <input class="form-control me-2 w-25 text-center m-3 bg-dark text-white btn-outline-light btn-lg" id="filter" type="search" placeholder="Suchen..." aria-label="Search" autocomplete="on">
+    <input class="form-control me-2 w-25 text-center m-3 bg-dark text-white btn-outline-light btn-lg" id="filter"
+        type="search" placeholder="Suchen..." aria-label="Search" autocomplete="on">
 </form>
 <div class="row mx-3" id="mycard">
     {% for item in employees %}
     <div class="col-sm-6 w-25 p-3">
-        <div class="card bg-dark text-white" style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);" id="card">
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" data-bs-toggle="modal"
-            data-bs-target="#deleteModal{{item}}" style="cursor: pointer; font-size:1em">
+        <div class="card bg-dark text-white" style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);"
+            id="card">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                data-bs-toggle="modal" data-bs-target="#deleteModal{{item}}" style="cursor: pointer; font-size:1em">
                 X
             </span>
             <div class="card-body p-5 text-center">
@@ -79,32 +80,33 @@
                 data-bs-target="#deleteModal{{item}}">
                     {% bs_icon 'trash-fill' color='white' size='1.5em' %} Löschen
                 </button>-->
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="deleteModal{{item}}" tabindex="-1" aria-labelledby="deleteModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal{{item}}" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-dark">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+                        </div>
+                        <div class="modal-body">
+                            Willst du wirklich den Account von {{item.username}} löschen?
+                        </div>
+                        <div class="modal-footer">
+                            <form action="{% url 'delete-employee-view' item.pk %}" id="delte-form" method="post"
+                                name="my-form" ajax="true">
+                                {% csrf_token %}
+                                <input type="submit" value="Account löschen"
+                                    class="btn btn-outline-light btn-lg px-5" />
+                            </form>
+                            <button type="button" class="btn btn-outline-light btn-lg px-5"
+                                data-bs-dismiss="modal">Abbruch</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    Willst du wirklich den Account von {{item.username}} löschen?
-                </div>
-                <div class="modal-footer">
-                    <form action="{% url 'delete-employee-view' item.pk %}" id="delte-form" method="post"
-                    name="my-form" ajax="true">
-                    {% csrf_token %}
-                    <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
-                </form>
-                <button type="button" class="btn btn-outline-light btn-lg px-5"
-                data-bs-dismiss="modal">Abbruch</button>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-{% endfor %}
+    {% endfor %}
 </div>
 {% endblock %}
