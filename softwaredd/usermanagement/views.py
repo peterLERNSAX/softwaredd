@@ -253,7 +253,7 @@ class CreateOfferView(View):
         customer = form.data["customer"]
         offer_file = form.data["offer_file"]
         layout = form.data["layout"]
-        description = form["description"]
+        description = form.data["description"]
         data = {"customer":customer,"offer_file":offer_file,"layout":layout,"description":description}
         if customer == "":
             data.pop("customer")
