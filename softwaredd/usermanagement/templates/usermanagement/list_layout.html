@@ -1,7 +1,74 @@
-{% extends "usermanagement/index_webserver.html" %}
+{% extends "usermanagement/index.html" %}
 {% load static %}
-{% block content %}
-{%for layout in content%}
-{{layout}}
-{%endfor%}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 {% endblock %}
+{% load bootstrap_icons %}
+{% block content %}
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'>
+</script>
+<script>
+    $(function () {
+        $("#filter").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#mycard > div").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<form class="form-inline nav-item d-flex">
+    <input class="form-control me-2 w-25 text-center m-3 bg-dark text-white btn-outline-light btn-lg" id="filter"
+        type="search" placeholder="Suchen..." aria-label="Search" autocomplete="on">
+</form>
+<div class="row mx-5" id="mycard">
+    {% for layout in content %}
+    <div class="col-sm-6 w-50 p-4 d-flex align-items-stretch">
+        <div class="card bg-dark text-white w-100" style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);" id="card">
+            <div class="card-body px-5 pt-5 text-center">
+                <div class="mb-md-5 mt-md-4">
+                    <embed type="application/pdf" height="500" width="100%" src={{layout.pdf_text}}/>
+                </div>
+            </div>
+            <div class="card-footer pb-5 text-center border-0">
+                <button type="button" class="btn btn-outline-light btn-lg px-5 mx-4" data-bs-toggle="modal">
+                    {% bs_icon 'download' color='white' size='1.5em' %} Download
+                </button>
+                <button type="button" class="btn btn-outline-light btn-lg px-5 mx-4" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal{{offers}}">
+                    {% bs_icon 'trash-fill' color='white' size='1.5em' %} Löschen
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal{{offers}}" tabindex="-1" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+                </div>
+                <div class="modal-body">
+                    Willst du wirklich den Grundriss löschen?
+                </div>
+                <div class="modal-footer">
+                    <!--hier würde das Form ding stehen, schau mal bei list_employee-->
+                    {% csrf_token %}
+                    <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
+                    </form>
+                    <button type="button" class="btn btn-outline-light btn-lg px-5"
+                        data-bs-dismiss="modal">Abbruch</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+
+
+
