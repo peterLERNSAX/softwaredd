@@ -4,7 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.views import LoginView
 from django.http import HttpRequest
-from django.shortcuts import HttpResponse, redirect, render
+from django.shortcuts import HttpResponse, redirect, render,HttpResponseRedirect
 from django.views import View
 from typing import Optional, Any
 import requests
@@ -405,6 +405,85 @@ class ListOfferView(View):
         employ = get_employee(request)
         return render(request,"usermanagement/list_offer.html",{"content":content_dict["response"],"employ":employ})
 
+class DeleteCustomerView(View):
+    """View for deleting cutomers"""
+
+    def get(self,request:HttpRequest,id:int)->HttpResponse:
+        """post"""
+        url = API_URL+"/dbApi/v1/delete/customer/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        data = {"customer_id":id}
+        response:Response=requests.delete(url,json=employee.get_permission_dict(),params=data)
+        assert(response,Response)
+        if not response.status_code == 200:
+            print(response)
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("list-customer-view")
+        return redirect("list-customer-view")
+
+class DeleteOfferView(View):
+    """View for deleting offers"""
+
+    def get(self,request:HttpRequest,id:int)->HttpResponse:
+        """post"""
+        url = API_URL+"/dbApi/v1/delete/offer/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        data = {"offer_id":id}
+        response:Response=requests.delete(url,json=employee.get_permission_dict(),params=data)
+        assert(response,Response)
+        if not response.status_code == 200:
+            print(response)
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("list-offers-view")
+        return redirect("list-offers-view")
+
+class DeleteOfferFileView(View):
+    """View for deleting offers"""
+
+    def get(self,request:HttpRequest,id:int)->HttpResponse:
+        """post"""
+        url = API_URL+"/dbApi/v1/delete/offer/file/new"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        data = {"offer_id":id}
+        response:Response=requests.delete(url,json=employee.get_permission_dict(),params=data)
+        assert(response,Response)
+        if not response.status_code == 200:
+            print(response)
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("list-offer-view")
+        return redirect("list-offer-view")
+
+class DeleteHardwareView(View):
+    """View for deleting offers"""
+
+    def get(self,request:HttpRequest,id:int)->HttpResponse:
+        """post"""
+        url = API_URL+"/dbApi/v1/delete/hardware/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        data = {"hardware_id":id}
+        response:Response=requests.delete(url,json=employee.get_permission_dict(),params=data)
+        assert(response,Response)
+        if not response.status_code == 200:
+            print(response)
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("list-hardware-view")
+        return redirect("list-hardware-view")
+
+class DeleteLayoutView(View):
+    """View for deleting offers"""
+
+    def get(self,request:HttpRequest,id:int)->HttpResponse:
+        """post"""
+        url = API_URL+"/dbApi/v1/delete/layout/"
+        employee:Employee = Employee.objects.get(pk=request.user.pk)
+        data = {"layout_id":id}
+        response:Response=requests.delete(url,json=employee.get_permission_dict(),params=data)
+        assert(response,Response)
+        if not response.status_code == 200:
+            print(response)
+            messages.warning(request,"Keine Verbindung zur Datenbank möglich")
+            return redirect("list-layout-view")
+        return redirect("list-layout-view")
 
 class CreateUserView(View):
     """Create user"""
