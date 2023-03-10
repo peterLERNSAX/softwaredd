@@ -44,10 +44,9 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-light btn-lg px-5 mx-4 align-bottom" data-bs-toggle="modal"
-                    href="mailto:{{customer.email}}">
+                <a type="button" class="btn btn-outline-light btn-lg px-5 mx-4 align-bottom" data-bs-toggle="modal" href='mailto:{{customer.email}}'>
                     {% bs_icon 'send-fill' color='white' size='1.5em' %} Mailto
-                </button>
+                </a>
                 <button type="button" class="btn btn-outline-light btn-lg px-5 mx-4 align-bottom" data-bs-toggle="modal"
                     data-bs-target="#deleteModal{{customer}}">
                     {% bs_icon 'trash-fill' color='white' size='1.5em' %} Löschen
