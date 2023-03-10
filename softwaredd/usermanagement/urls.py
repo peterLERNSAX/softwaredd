@@ -34,4 +34,9 @@ urlpatterns = [
     path("hardware/erstellen/", views.CreateHardwareView.as_view(),name="create-hardware-view"),
     path("kunden/erstellen/",views.CreateCustomerView.as_view(),name="create-customer-view"),
     path("angebote/erstellen/",views.CreateOfferView.as_view(),name="create-offer-view"),
+    path("kunden/löschen/<int:id>/",views.DeleteCustomerView.as_view(),name="delete-customer-view"),
+    path("angebote/löschen/<int:id>/",views.DeleteOfferView.as_view(),name="delete-offer-view"),
+    path("angebotsdateien/löschen/<int:id>/",views.DeleteOfferFileView.as_view(),name="delete-offer-file-view"),
+    path("hardware/löschen/<int:id>/",views.DeleteHardwareView.as_view(),name="delete-hardware-view"),
+    path("grundrisse/löschen/<int:id>/",views.DeleteLayoutView.as_view(),name="delete-layout-view"),
 ]
