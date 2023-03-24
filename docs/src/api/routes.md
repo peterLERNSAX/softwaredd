@@ -9,12 +9,16 @@
 - [Route /dbApi/v1/delete/customer/](#route-dbapiv1deletecustomer)
 - [Route /dbApi/v1/post/offer/all/](#route-dbapiv1postofferall)
 - [Route /dbApi/v1/post/offer/new/](#route-dbapiv1postoffernew)
+- [Route /dbApi/v1/delete/offer/](#route-dbapiv1deleteoffer)
 - [Route /dbApi/v1/post/hardware/all/](#route-dbapiv1posthardwareall)
 - [Route /dbApi/v1/post/hardware/new/](#route-dbapiv1posthardwarenew)
+- [Route /dbApi/v1/delete/hardware/](#route-dbapiv1deletehardware)
 - [Route /dbApi/v1/post/layout/all/](#route-dbapiv1postlayoutall)
 - [Route /dbApi/v1/post/layout/new/](#route-dbapiv1postlayoutnew)
+- [Route /dbApi/v1/delete/layout/](#route-dbapiv1deleteoffer)
 - [Route /dbApi/v1/post/offer/file/all/](#route-dbapiv1postofferfileall)
 - [Route /dbApi/v1/post/offer/file/new/](#route-dbapiv1postofferfilenew)
+- [Route /dbApi/v1/delete/offer/file/new/](#route-dbapiv1deleteofferfile)
 
 ---
 ---
@@ -95,7 +99,7 @@ Test coverage: `no`
 
 Test coverage: `no`
 
-- Route for deleting customer to the database
+- Route for deleting a customer from the database
 - Method: `post`
 - Arguments:
   - customer_id of type: `int`
@@ -166,6 +170,35 @@ Test coverage: `no`
   - offer_file (FK) of type: `Optional[int]` with default `None`
   - layout (FK) of type: `Optional[int]` with default `None`
   - description of type: `Optional[str]` with default `None`
+- Returns [return_403](functions.md#return_403) if permissions are missing
+- Returns 1 if everything worked
+
+[go up](#routes)
+
+---
+---
+
+## Route /dbApi/v1/delete/offer/
+
+```python
+    @app.delete("/dbApi/v1/delete/offer/")
+    async def delete_offer(offer_id:int,perms:Permission):
+        """
+        Route for deleting offers
+        """
+        if not check_permission(perms,4):
+            return return_403()
+        db_manager.remove_offer(offer_id)
+        return {"response":1}
+```
+
+Test coverage: `no`
+
+- Route for deleting a offer from the database
+- Method: `post`
+- Arguments:
+  - offer_id of type: `int`
+  - perms of type: [Permission](models.md#permission)
 - Returns [return_403](functions.md#return_403) if permissions are missing
 - Returns 1 if everything worked
 
@@ -249,6 +282,35 @@ Test coverage: `no`
 ---
 ---
 
+## Route /dbApi/v1/delete/hardware/
+
+```python
+    @app.delete("/dbApi/v1/delete/hardware/")
+    async def delete_hardware(hardware_id:int,perms:Permission):
+        """
+        Route for deleting hardware
+        """
+        if not check_permission(perms,3):
+            return return_403()
+        db_manager.remove_hardware(hardware_id)
+        return {"response":1}
+```
+
+Test coverage: `no`
+
+- Route for deleting harware from the database
+- Method: `post`
+- Arguments:
+  - hardware_id of type: `int`
+  - perms of type: [Permission](models.md#permission)
+- Returns [return_403](functions.md#return_403) if permissions are missing
+- Returns 1 if everything worked
+
+[go up](#routes)
+
+---
+---
+
 ## Route /dbApi/v1/post/layout/all/
 
 ```python
@@ -307,6 +369,35 @@ Test coverage: `no`
 ---
 ---
 
+## Route /dbApi/v1/delete/layout/
+
+```python
+    @app.delete("/dbApi/v1/delete/layout/")
+    async def delete_layout(layout_id:int,perms:Permission):
+        """
+        Route for deleting layout
+        """
+        if not check_permission(perms,2):
+            return return_403()
+        db_manager.remove_layout(layout_id=layout_id)
+        return {"response":1}
+```
+
+Test coverage: `no`
+
+- Route for deleting a layout from the database
+- Method: `post`
+- Arguments:
+  - layout_id of type: `int`
+  - perms of type: [Permission](models.md#permission)
+- Returns [return_403](functions.md#return_403) if permissions are missing
+- Returns 1 if everything worked
+
+[go up](#routes)
+
+---
+---
+
 ## Route /dbApi/v1/post/offer/file/all/
 
 ```python
@@ -356,6 +447,35 @@ Test coverage: `no`
 - Method: `post`
 - Arguments:
   - pdf_text of type: `str`
+  - perms of type: [Permission](models.md#permission)
+- Returns [return_403](functions.md#return_403) if permissions are missing
+- Returns 1 if everything worked
+
+[go up](#routes)
+
+---
+---
+
+## Route /dbApi/v1/delete/offer/file/
+
+```python
+    @app.delete("/dbApi/v1/delete/offer/file/")
+    async def delete_offer_file(offer_id:int,perms:Permission):
+        """
+        Route for deleting offer
+        """
+        if not check_permission(perms,5):
+            return return_403()
+        db_manager.remove_offer_file(offer_id=offer_id)
+        return {"response":1}
+```
+
+Test coverage: `no`
+
+- Route for deleting a offer file from the database
+- Method: `post`
+- Arguments:
+  - offer_id of type: `int`
   - perms of type: [Permission](models.md#permission)
 - Returns [return_403](functions.md#return_403) if permissions are missing
 - Returns 1 if everything worked
