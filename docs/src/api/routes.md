@@ -6,13 +6,15 @@
 
 - [Route /dbApi/v1/post/customer/all/](#route-dbapiv1postcustomerall)
 - [Route /dbApi/v1/post/customer/new/](#route-dbapiv1postcustomernew)
+- [Route /dbApi/v1/delete/customer/](#route-dbapiv1deletecustomer)
 - [Route /dbApi/v1/post/offer/all/](#route-dbapiv1postofferall)
-- [Route /dbApi/v1/post/offer/new/]
+- [Route /dbApi/v1/post/offer/new/](#route-dbapiv1postoffernew)
 - [Route /dbApi/v1/post/hardware/all/](#route-dbapiv1posthardwareall)
 - [Route /dbApi/v1/post/hardware/new/](#route-dbapiv1posthardwarenew)
 - [Route /dbApi/v1/post/layout/all/](#route-dbapiv1postlayoutall)
 - [Route /dbApi/v1/post/layout/new/](#route-dbapiv1postlayoutnew)
-- [Route /dbApi/v1/post/offer/file/all/](#route-dbapiv1postofferall)
+- [Route /dbApi/v1/post/offer/file/all/](#route-dbapiv1postofferfileall)
+- [Route /dbApi/v1/post/offer/file/new/](#route-dbapiv1postofferfilenew)
 
 ---
 ---
@@ -77,6 +79,36 @@ Test coverage: `no`
 ---
 ---
 
+## Route /dbApi/v1/delete/customer/
+
+```python
+    @app.delete("/dbApi/v1/delete/customer/")
+    async def delete_cutomer(customer_id:int,perms:Permission):
+        """
+        Route for deleting customer
+        """
+        if not check_permission(perms,3):
+            return return_403()
+        db_manager.remove_customer(customer_id)
+        return {"response":1}
+```
+
+Test coverage: `no`
+
+- Route for deleting customer to the database
+- Method: `post`
+- Arguments:
+  - customer_id of type: `int`
+  - perms of type: [Permission](models.md#permission)
+  - company_name of type: `Optional[str]` with default `None`
+- Returns [return_403](functions.md#return_403) if permissions are missing
+- Returns 1 if everything worked
+
+[go up](#routes)
+
+---
+---
+
 ## Route /dbApi/v1/post/offer/all/
 
 ```python
@@ -108,8 +140,34 @@ Test coverage: `no`
 ## Route /dbApi/v1/post/offer/new/
 
 ```python
-
+    @app.post("/dbApi/v1/post/offer/new/")
+    async def post_new_offer(perms:Permission,
+                         customer:Optional[int]=None,
+                         offer_file:Optional[int]=None,
+                         layout:Optional[int]=None,
+                         description:Optional[str]=None):
+        """
+        Route for creating new offer
+        """
+        if not check_permission(perms,4):
+            return return_403()
+        offer = Offer(customer=customer,offer_file=offer_file,layout=layout,description=description)
+        db_manager.write_offer(offer)
+        return {"response":1}
 ```
+
+Test coverage: `no`
+
+- Route for adding a new offer to the database
+- Method: `post`
+- Arguments:
+  - perms of type: [Permission](models.md#permission)
+  - customer (FK) of type: `Optional[int]` with default `None`
+  - offer_file (FK) of type: `Optional[int]` with default `None`
+  - layout (FK) of type: `Optional[int]` with default `None`
+  - description of type: `Optional[str]` with default `None`
+- Returns [return_403](functions.md#return_403) if permissions are missing
+- Returns 1 if everything worked
 
 [go up](#routes)
 
@@ -271,6 +329,36 @@ Test coverage: `no`
   - perms of type: [Permission](models.md#permission)
 - Gets all offer files from db
 - Returns all offer files
+
+[go up](#routes)
+
+---
+---
+
+## Route /dbApi/v1/post/offer/file/new/
+
+```python
+    @app.post("/dbApi/v1/post/offer/file/new/")
+    async def post_new_offer_file(pdf_text:str,perms:Permission):
+        """
+        Route for creating new offer file
+        """
+        if not check_permission(perms,5):
+            return return_403()
+        offer = OfferFile(pdf_text=pdf_text)
+        db_manager.write_offer_file(offer)
+        return {"response":1}
+```
+
+Test coverage: `no`
+
+- Route for adding a new offer file to the database
+- Method: `post`
+- Arguments:
+  - pdf_text of type: `str`
+  - perms of type: [Permission](models.md#permission)
+- Returns [return_403](functions.md#return_403) if permissions are missing
+- Returns 1 if everything worked
 
 [go up](#routes)
 
