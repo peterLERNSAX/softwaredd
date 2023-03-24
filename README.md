@@ -1,5 +1,8 @@
 # softwaredd
 ## Dokumentation
+
+Zur vollständigen [Dokumentation](docs/docs.md)
+
 Eine online Dokumentation ist unter *https://webserver.steppencloud.de* abrufbar.<br>
 Als Backup dient diese *README*.
 ### Beteiligte des Geschäftsprozesses
