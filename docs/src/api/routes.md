@@ -105,6 +105,17 @@ Test coverage: `no`
 ---
 ---
 
+## Route /dbApi/v1/post/offer/new/
+
+```python
+
+```
+
+[go up](#routes)
+
+---
+---
+
 ## Route /dbApi/v1/post/hardware/all/
 
 ```python

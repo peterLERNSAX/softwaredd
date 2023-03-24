@@ -455,7 +455,7 @@ Test coverage: `no`
 - gets current employee
 - creates dict with employee permissions
 - sends `post` Request to the [API](../api.md)
-  - [Route]
+  - [Route](../api/routes.md#route-dbapiv1postlayoutall)
 - Renders page `list_layout.html` with the current user and all layouts
 
 [go up](#views)
