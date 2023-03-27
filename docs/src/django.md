@@ -1,7 +1,7 @@
 # Django-Backend
 
 - developer: Peter Koban
-- Framework: FastAPI [Docs](https://fastapi.tiangolo.com/)
+- Framework: Django [Docs](https://docs.djangoproject.com/en/4.1/)
 
 Needed installation
 

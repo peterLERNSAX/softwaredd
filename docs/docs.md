@@ -1,4 +1,4 @@
-# Dokumentation zu SoftwareDD
+# Documentation for SoftwareDD
 
 ## Content
 
