@@ -71,7 +71,7 @@ class IndexView(View):
     """Indexview"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for the `index` page
 
@@ -98,7 +98,7 @@ class DocsView(View):
     """Docs"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for the `index_webserver` page
 
@@ -127,7 +127,7 @@ Test coverage: `no`
         """Geschäftsprozesse"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for the `geschaeftsprozess` page
 
@@ -158,7 +158,7 @@ Test coverage: `no`
         """Notwendigedaten"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for the `notwendigedaten` page
 
@@ -187,7 +187,7 @@ Test coverage: `no`
         """Sequenz"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for the `sequenz` page
 
@@ -216,7 +216,7 @@ Test coverage: `no`
         """Use-Case"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for the `use-case` page
 
@@ -245,7 +245,7 @@ Test coverage: `no`
         """Copyright"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for `Copyright` page
 
@@ -274,7 +274,7 @@ Test coverage: `no`
         """Webserver"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for the `webserver` page
 
