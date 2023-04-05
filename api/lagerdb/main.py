@@ -1,9 +1,9 @@
 """main"""
 
-from .models.models import Base
 from sqlalchemy.orm import sessionmaker
-from .engine import engine
 
+from .engine import engine
+from .models.models import Base
 
 Base.metadata.create_all(engine)
 
