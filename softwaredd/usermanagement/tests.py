@@ -2,8 +2,11 @@
 Tests
 """
 
+from django.contrib.messages import get_messages
 from django.test import Client, TestCase
 from django.urls import reverse
+
+from .models import Employee
 
 # Create your tests here.
 
@@ -13,10 +16,9 @@ class TestIndexView(TestCase):
     Tests for index view
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("index-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -69,10 +71,9 @@ class TestDocsView(TestCase):
     Tests for DocsView
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("show-webserver-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -125,10 +126,9 @@ class TestGeschaeftsprozessView(TestCase):
     Tests for GeschaeftsprozessView
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("geschaeftsprozess-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -181,10 +181,9 @@ class TestNotwendigedatenView(TestCase):
     Tests for NotwendigedatenView
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("notwendigedaten-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -237,10 +236,9 @@ class TestSequenzView(TestCase):
     Tests for SequenzView
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("sequenz-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -293,10 +291,9 @@ class TestUseCaseView(TestCase):
     Tests for UseCaseView
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("use-case-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -349,10 +346,9 @@ class TestCopyrightView(TestCase):
     Tests for CopyrightView
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("copyright-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -405,10 +401,9 @@ class TestWebserverView(TestCase):
     Tests for WebserverView
     """
 
-    def __init__(self, methodName: str = "runTest") -> None:
+    def setUp(self) -> None:
         self.client = Client()
         self.url = reverse("webserver-view")
-        super().__init__(methodName)
 
     def test_get_response(self) -> None:
         """
@@ -454,3 +449,109 @@ class TestWebserverView(TestCase):
         self.assertEqual(
             response.templates[0].name, "usermanagement/webserver.html"
         )
+
+
+class TestLoginView(TestCase):
+    """
+    Tests for the Login view
+    """
+
+    def setUp(self) -> None:
+        self.client = Client()
+        self.url = reverse("login-view")
+
+    def test_statuscode_200_get(self) -> None:
+        """
+        Tests that the statuscode is 200 in get
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_statuscode_200_post(self) -> None:
+        """
+        Tests that te statuscode is 200 in post
+        """
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_template_get(self) -> None:
+        """
+        Tests that the correct template was loaded
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(
+            response.templates[0].name,
+            "usermanagement/login.html",
+        )
+
+
+class TestLogoutView(TestCase):
+    """
+    Tests for the LogoutView
+    """
+
+    def setUp(self) -> None:
+        self.client = Client()
+        self.url = reverse("logout-view")
+        self.user = Employee.objects.create(username="te")
+        self.user.set_password("123")
+        self.client.login(username="te", password="123")
+
+    def test_statuscode_302_get(self) -> None:
+        """
+        Tests if statuscode is 302 in get
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_statuscode_200_get_after_redirect(self) -> None:
+        """
+        Tests if statuscode is 200 after the redirect
+        """
+        response = self.client.get(self.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_if_user_is_logged_in(self) -> None:
+        """
+        Checks if the user is authenticated without logout view
+        """
+        self.assertTrue(self.user.is_authenticated)
+
+    def test_user_is_logged_out(self) -> None:
+        """
+        Checks is the user is logged out after the request
+        """
+        response = self.client.get(self.url, follow=True)
+        self.user.refresh_from_db()
+        self.assertFalse(response.context["user"].is_authenticated)
+
+    def test_logout_message(self) -> None:
+        """
+        Checks if the logout message is displayed correctly
+        """
+        response = self.client.get(self.url, follow=True)
+        # Black magic to get messages
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Erfolgreich abgemeldet", messages)
+
+    def test_no_other_methods_status_code_405(self) -> None:
+        """
+        Checks if statuscode of response is 405
+        Other methods
+        """
+        with self.subTest("POST"):
+            response = self.client.post(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("PUT"):
+            response = self.client.put(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("DELETE"):
+            response = self.client.delete(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("TRACE"):
+            response = self.client.trace(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("PATCH"):
+            response = self.client.patch(self.url)
+            self.assertEqual(response.status_code, 405)
