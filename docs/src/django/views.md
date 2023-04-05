@@ -306,7 +306,7 @@ Test coverage: `yes`
         success_url = "{% url 'index-view'%}"
 ```
 
-Test coverage: `no`
+Test coverage: `partly`
 
 - View for the employee login
 - Uses djangos built-in [LoginView](https://docs.djangoproject.com/en/4.0/topics/auth/default/) [Django Docs]
@@ -334,7 +334,7 @@ Test coverage: `no`
         """Logout"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for employee logout
 
