@@ -555,3 +555,141 @@ class TestLogoutView(TestCase):
         with self.subTest("PATCH"):
             response = self.client.patch(self.url)
             self.assertEqual(response.status_code, 405)
+
+
+class TestDeleteEmployeeView(TestCase):
+    """
+    Tests for DeleteEmployee
+    """
+
+    def setUp(self) -> None:
+        self.client = Client()
+        self.user = Employee.objects.create(username="username")
+        self.url = reverse("delete-employee-view", args=[self.user.pk])
+
+    def test_statuscode_302_post_no_perms(self) -> None:
+        """
+        Checks if the statuscode is 302 in post
+        """
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_statuscode_302_post_perms(self) -> None:
+        """
+        Checks if the statuscode is 302 in post
+        """
+        admin = Employee.objects.create(username="admin")
+        assert isinstance(admin, Employee)
+        self.client.force_login(admin)
+        admin.perm_usermanagement = True
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_statuscode_200_post_after_redirect_no_perms(self) -> None:
+        """
+        Checks if the statuscode is 200 after the redirect in post
+        """
+        response = self.client.post(self.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_statuscode_200_post_after_redirect_perms(self) -> None:
+        """
+        Checks if the statuscode is 200 after the redirect in post
+        """
+        admin = Employee.objects.create(username="admin")
+        assert isinstance(admin, Employee)
+        self.client.force_login(admin)
+        admin.perm_usermanagement = True
+        response = self.client.post(self.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_employee_was_not_deleted(self) -> None:
+        """
+        Checks if the employee was not deleted because of missing perms
+        """
+        self.assertIn(self.user, Employee.objects.all())
+        _ = self.client.post(self.url, follow=True)
+        self.user.refresh_from_db()
+        self.assertIn(self.user, Employee.objects.all())
+
+    def test_employee_was_deleted(self) -> None:
+        """
+        Checks if the employee was deleted
+        """
+        admin = Employee.objects.create(username="admin")
+        assert isinstance(admin, Employee)
+        self.client.force_login(admin)
+        admin.perm_usermanagement = True
+        self.assertIn(self.user, Employee.objects.all())
+        _ = self.client.post(self.url, follow=True)
+        self.assertNotIn(self.user, Employee.objects.all())
+
+    def test_message_no_perms(self) -> None:
+        """
+        Checks if the logout message is displayed correctly
+        """
+        response = self.client.post(self.url, follow=True)
+        # Black magic to get messages
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Unzureichende Berechtigungen", messages)
+
+    def test_message_perms(self) -> None:
+        """
+        Checks if the logout message is displayed correctly
+        """
+        admin = Employee.objects.create(username="admin")
+        assert isinstance(admin, Employee)
+        self.client.force_login(admin)
+        admin.perm_usermanagement = True
+        response = self.client.post(self.url, follow=True)
+        # Black magic to get messages
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Nutzer erfolgreich gelöscht", messages)
+
+    def test_no_other_methods_status_code_405_no_perms(self) -> None:
+        """
+        Checks if statuscode of response is 405
+        Other methods
+        """
+        admin = Employee.objects.create(username="admin")
+        assert isinstance(admin, Employee)
+        self.client.force_login(admin)
+        admin.perm_usermanagement = True
+        with self.subTest("GET"):
+            response = self.client.get(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("PUT"):
+            response = self.client.put(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("DELETE"):
+            response = self.client.delete(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("TRACE"):
+            response = self.client.trace(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("PATCH"):
+            response = self.client.patch(self.url)
+            self.assertEqual(response.status_code, 405)
+
+    def test_no_other_methods_status_code_405_perms(self) -> None:
+        """
+        Checks if statuscode of response is 405
+        Other methods
+        """
+        with self.subTest("GET"):
+            response = self.client.get(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("PUT"):
+            response = self.client.put(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("DELETE"):
+            response = self.client.delete(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("TRACE"):
+            response = self.client.trace(self.url)
+            self.assertEqual(response.status_code, 405)
+        with self.subTest("PATCH"):
+            response = self.client.patch(self.url)
+            self.assertEqual(response.status_code, 405)

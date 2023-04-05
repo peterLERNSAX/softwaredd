@@ -363,7 +363,7 @@ Test coverage: `yes`
         """Delete Employee"""
 ```
 
-Test coverage: `no`
+Test coverage: `yes`
 
 - View for deleting employees
 
