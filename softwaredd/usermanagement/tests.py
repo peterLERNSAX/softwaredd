@@ -567,10 +567,19 @@ class TestDeleteEmployeeView(TestCase):
         self.user = Employee.objects.create(username="username")
         self.url = reverse("delete-employee-view", args=[self.user.pk])
 
+    def test_statuscode_302_post_not_authenticated(self) -> None:
+        """
+        Checks if the statuscode is 302 in post
+        """
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)
+
     def test_statuscode_302_post_no_perms(self) -> None:
         """
         Checks if the statuscode is 302 in post
         """
+        user = Employee.objects.create(username="test")
+        self.client.force_login(user)
         response = self.client.post(self.url)
         self.assertEqual(response.status_code, 302)
 
@@ -620,6 +629,7 @@ class TestDeleteEmployeeView(TestCase):
         assert isinstance(admin, Employee)
         self.client.force_login(admin)
         admin.perm_usermanagement = True
+        admin.save()
         self.assertIn(self.user, Employee.objects.all())
         _ = self.client.post(self.url, follow=True)
         self.assertNotIn(self.user, Employee.objects.all())
@@ -628,6 +638,9 @@ class TestDeleteEmployeeView(TestCase):
         """
         Checks if the logout message is displayed correctly
         """
+        user = Employee.objects.create(username="test")
+        assert isinstance(user, Employee)
+        self.client.force_login(user)
         response = self.client.post(self.url, follow=True)
         # Black magic to get messages
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -640,8 +653,9 @@ class TestDeleteEmployeeView(TestCase):
         """
         admin = Employee.objects.create(username="admin")
         assert isinstance(admin, Employee)
-        self.client.force_login(admin)
         admin.perm_usermanagement = True
+        admin.save()
+        self.client.force_login(admin)
         response = self.client.post(self.url, follow=True)
         # Black magic to get messages
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -693,3 +707,36 @@ class TestDeleteEmployeeView(TestCase):
         with self.subTest("PATCH"):
             response = self.client.patch(self.url)
             self.assertEqual(response.status_code, 405)
+
+
+class TestListEmployeeView(TestCase):
+    """Tests for list employee"""
+
+    def setUp(self) -> None:
+        self.client = Client()
+        self.user = Employee.objects.create(username="username")
+        self.url = reverse("list-employee-view")
+
+    def test_statuscode_302_get_no_perms(self) -> None:
+        """
+        Checks if the statuscode is 302 in get
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_statuscode_200_get_perms(self) -> None:
+        """
+        Checks if the statuscode is 200 in get
+        """
+        user = Employee.objects.create(username="test")
+        assert isinstance(user, Employee)
+        user.perm_usermanagement = True
+        user.save()
+        self.client.force_login(user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_len_of_user_list(self) -> None:
+        """
+        Checks if all employees were found
+        """

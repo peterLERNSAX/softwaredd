@@ -155,6 +155,11 @@ class DeleteEmployee(View):
         if not request.user.is_authenticated:
             messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
+        current = Employee.objects.get(pk=request.user.pk)
+        assert isinstance(current, Employee)
+        if not current.perm_usermanagement:
+            messages.error(request, "Unzureichende Berechtigungen")
+            return redirect("index-view")
         employee = Employee.objects.get(pk=uid)
         employee.delete()
         messages.success(request, "Nutzer erfolgreich gelöscht")
@@ -166,6 +171,14 @@ class ListEmployee(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request, "Nicht eingelogt")
+            return redirect("login-view")
+        current = Employee.objects.get(pk=request.user.pk)
+        assert isinstance(current, Employee)
+        if not current.perm_usermanagement:
+            messages.error(request, "Unzureichende Berechtigungen")
+            return redirect("index-view")
         all_employee = Employee.objects.all()
         employ = get_employee(request)
         return render(
