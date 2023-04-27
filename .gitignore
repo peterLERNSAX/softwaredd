@@ -8,3 +8,7 @@
 api/lager.db
 example_json.txt
 softwaredd/softwaredd/__pycache__/*
+backup/lagerdb/
+backup/userdb/
+softwaredd/.DS_Store
+softwaredd/.DS_Store
