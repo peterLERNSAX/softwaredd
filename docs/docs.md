@@ -7,6 +7,7 @@
 - [Frontend](src/frontend.md)
 - [SQL-Alchemy Backend](src/sql.md)
 - [REST-API](src/api.md)
+- [Referentielle Integrität](src/ri.md)
 
 ## Contributors
 
