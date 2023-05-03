@@ -661,7 +661,7 @@ class CreateUserView(View):
         if not request.user.is_authenticated:
             messages.error(request, "Unzureichende Berechtigungen")
             return redirect("index-view")
-        user = request.user
+        user = Employee.objects.get(pk=request.user.pk)
         assert isinstance(user, Employee)
         if not employee_authentication(user, "usermanagement"):
             messages.error(request, "Unzureichende Berechtigungen")
