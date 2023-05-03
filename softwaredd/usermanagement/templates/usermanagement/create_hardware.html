@@ -1,9 +1,67 @@
 {% extends "usermanagement/index.html" %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/styleList.css' %}">
+{% endblock %}
 {% block content %}
-<form action="{% url 'create-hardware-view' %}" method="post">
-    {{form.as_p}}
-    {%csrf_token%}
-    <button class="btn btn-outline-light btn-lg px-5 mt-3" type="submit">Erstellen</button>
-</form>
+<section class="gradient-custom">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white"
+                    style="border-radius: 1rem; box-shadow: 0 15px 20px 0 rgba(0,0,0,0.4);">
+                    <div class="card-body p-5 text-center">
+                        <div class="">
+                            <h2 class="fw-bold mb-2 text-uppercase">Hardware hinzufügen</h2>
+                            <p class="text-white-50 mb-3">
+                                Hinzufügen von Hardware hier möglich.
+                            </p>
+                            <form action="{%url 'create-hardware-view'%}" method="post">
+                                {% csrf_token %}
+                                <div class="form-outline form-white bg-dark mb-4">
+                                    <input type="text" name="name" maxlength="200" required
+                                        class="form-control form-control-lg bg-dark text-white" id="id_name">
+                                    <label class="form-label" for="id_name">Name</label>
+                                </div>
+                                <div class="form-outline form-white bg-dark mb-4">
+                                    <textarea class="form-control bg-dark form-control-lg text-white" name="description"
+                                        id="id_description" rows="3"></textarea>
+                                    <label class="form-label" for="id_description">Beschreibung</label>
+                                </div>
+                                <div class="form-outline form-white bg-dark mb-4">
+                                    <input type="text" maxlength="20" name="size" required
+                                        class="form-control form-control-lg bg-dark text-white" id="id_size">
+                                    <label class="form-label" for="id_size">Größe (5x5m)</label>
+                                </div>
+                                <div class="form-outline form-white bg-dark mb-4">
+                                    <input type="number" name="weight" required
+                                        class="form-control form-control-lg bg-dark text-white" id="id_weight">
+                                    <label class="form-label" for="id_weight">Gewicht in kg</label>
+                                </div>
+                                <div class="form-outline form-white bg-dark mb-4">
+                                    <input type="number" name="cable_length" required
+                                        class="form-control form-control-lg bg-dark text-white" id="id_cable_length">
+                                    <label class="form-label" for="id_cable_length">Kabellänge in m</label>
+                                </div>
+                                <div class="form-outline form-white bg-dark mb-4">
+                                    <input type="number" name="power_consumption" required
+                                        class="form-control form-control-lg bg-dark text-white"
+                                        id="id_power_consumption">
+                                    <label class="form-label" for="id_power_consumption">Stromverbrauch in Wh</label>
+                                </div>
+                                <div class="form-outline form-white bg-dark mb-4">
+                                    <textarea class="form-control bg-dark form-control-lg text-white"
+                                        name="workplace_ergonomics" id="id_workplace_ergonomics" rows="3"></textarea>
+                                    <label class="form-label"
+                                        for="id_workplace_ergonomics">Arbeitsplatzergonomie</label>
+                                </div>
+                                <button class="btn btn-outline-light btn-lg px-5 mt-3" type="submit">hinzufügen</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

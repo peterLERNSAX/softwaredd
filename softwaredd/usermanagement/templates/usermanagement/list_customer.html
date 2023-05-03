@@ -44,30 +44,32 @@
                         </div>
                     </div>
                 </div>
-                <a type="button" class="btn btn-outline-light btn-lg px-5 mx-4 align-bottom" data-bs-toggle="modal" href='mailto:{{customer.email}}'>
+                <a type="button" class="btn btn-outline-light btn-lg px-5 mx-4 align-bottom" data-bs-toggle="modal"
+                    href='mailto:{{customer.email}}'>
                     {% bs_icon 'send-fill' color='white' size='1.5em' %} Mailto
                 </a>
                 <button type="button" class="btn btn-outline-light btn-lg px-5 mx-4 align-bottom" data-bs-toggle="modal"
-                    data-bs-target="#deleteModal{{customer}}">
+                    data-bs-target="#deleteModal{{customer.id}}">
                     {% bs_icon 'trash-fill' color='white' size='1.5em' %} Löschen
                 </button>
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="deleteModal{{customer}}" tabindex="-1" aria-labelledby="deleteModalLabel"
+        <div class="modal fade" id="deleteModal{{customer.id}}" tabindex="-1" aria-labelledby="deleteModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content bg-dark">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+                        <h5 class="modal-title text-white" id="deleteModalLabel">Bist du dir sicher?</h5>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-white">
                         Willst du wirklich den Account von {{customer.name}} löschen?
                     </div>
                     <div class="modal-footer">
-                        <!--hier würde das Form ding stehen, schau mal bei list_employee-->
-                        {% csrf_token %}
-                        <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
+                        <form action="{% url 'delete-customer-view' customer.id %}" id="delte-form" method="get"
+                            name="my-form" ajax="true">
+                            {% csrf_token %}
+                            <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
                         </form>
                         <button type="button" class="btn btn-outline-light btn-lg px-5"
                             data-bs-dismiss="modal">Abbruch</button>

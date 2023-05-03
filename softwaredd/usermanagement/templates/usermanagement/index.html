@@ -31,13 +31,32 @@
         {% if not user.is_authenticated %}
         <a class="nav-item nav-link" href="{% url 'login-view' %}">Login</a>
         {% endif %}
-        {% if employ.perm_usermanagement %}
-        <a class="nav-item nav-link" href="{% url 'create-user-view' %}">Nutzer erstellen</a>
+        {% if employ.perm_usermanagement or employ.perm_database %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Daten anlegen
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+            {% if employ.perm_usermanagement %}
+            <li>
+              <a class="dropdown-item nav-link bg-dark" href="{% url 'create-user-view' %}">Nutzer erstellen</a>
+            </li>
+            {% endif %}
+            {% if employ.perm_database %}
+            <li>
+              <a class="dropdown-item nav-link bg-dark" href="{% url 'create-hardware-view' %}">Harware hinzufügen</a>
+            </li>
+            <li>
+              <a class="dropdown-item nav-link bg-dark" href="{% url 'create-customer-view' %}">Kunden hinzufügen</a>
+            </li>
+            {% endif %}
+          </ul>
+        </li>
         {% endif %}
         {% if employ.perm_usermanagement or employ.perm_layout or employ.perm_database or employ.perm_offer or employ.perm_offer_file %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Datenbankabfragen
+            Daten abfragen
           </a>
           <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
             {% if employ.perm_usermanagement %}
