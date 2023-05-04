@@ -25,8 +25,8 @@
 <div class="row mx-5" id="mycard">
     {% for hardware in content %}
     <div class="col-sm-6 px-5 w-50 p-3 d-flex align-items-stretch">
-        <div class="card bg-dark text-white w-100" style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);"
-            id="card">
+        <div class="card bg-dark text-white w-100"
+            style="border-radius: 1rem; box-shadow: 0 10px 15px 0 rgba(0,0,0,0.4);" id="card">
             <div class="card-body p-5 text-center">
                 <div class="mb-md-5 mt-md-4">
                     <h2 class="fw-bold mb-2 text-uppercase">{{hardware.name}}<span
@@ -55,7 +55,8 @@
                     </div>
                     <div class="p-2 text-start">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Arbeitsplatzergonomie">
-                            {% bs_icon 'person-workspace' color='white' size='1.5em' %} {{hardware.workplace_ergonomics}}
+                            {% bs_icon 'person-workspace' color='white' size='1.5em' %}
+                            {{hardware.workplace_ergonomics}}
                         </div>
                     </div>
                     <div class="p-2 text-start">
@@ -68,26 +69,27 @@
             </div>
             <div class="card-footer pb-5 text-center border-0">
                 <button type="button" class="btn btn-outline-light btn-lg px-5" data-bs-toggle="modal"
-                    data-bs-target="#deleteModal{{hardware}}">
-                    Löschen
+                    data-bs-target="#deleteModal{{hardware.id}}">
+                    Entfernen
                 </button>
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="deleteModal{{hardware}}" tabindex="-1" aria-labelledby="deleteModalLabel"
+        <div class="modal fade" id="deleteModal{{hardware.id}}" tabindex="-1" aria-labelledby="deleteModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content bg-dark">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Bist du dir sicher?</h5>
+                        <h5 class="modal-title text-white" id="deleteModalLabel">Bist du dir sicher?</h5>
                     </div>
-                    <div class="modal-body">
-                        Willst du wirklich den Account von {{hardware.name}} löschen?
+                    <div class="modal-body text-white">
+                        Willst du wirklich {{hardware.name}} entfernen?
                     </div>
                     <div class="modal-footer">
-                        <!--hier würde das Form ding stehen, schau mal bei list_employee-->
-                        {% csrf_token %}
-                        <input type="submit" value="Account löschen" class="btn btn-outline-light btn-lg px-5" />
+                        <form action="{% url 'delete-hardware-view' hardware.id %}" id="delte-form" method="get"
+                            name="my-form" ajax="true">
+                            {% csrf_token %}
+                            <input type="submit" value="Hardware entfernen" class="btn btn-outline-light btn-lg px-5" />
                         </form>
                         <button type="button" class="btn btn-outline-light btn-lg px-5"
                             data-bs-dismiss="modal">Abbruch</button>
