@@ -183,6 +183,7 @@ async def post_new_offer(
     offer_file: Optional[int] = None,
     layout: Optional[int] = None,
     description: Optional[str] = None,
+    hardware: Optional[list[str]] = None,
 ) -> Any:
     """
     Route for creating new offer
@@ -197,6 +198,9 @@ async def post_new_offer(
         layout=layout,
         description=description,
     )
+    if (hardware!=None):
+        for elem in hardware:
+            offer.hardwware.append_foreign_key(elem)
     db_manager.write_offer(offer)
     return {"response": 1}
 

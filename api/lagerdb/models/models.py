@@ -37,6 +37,7 @@ class Offer(Base):
     offer_file = Column(Integer, ForeignKey("offerfile.id"), nullable=True)
     layout = Column(Integer, ForeignKey("layout.id"), nullable=True)
     description = Column(String, nullable=True)
+    hardwware = Column(Integer,ForeignKey("hardware.id"),nullable=True,index=True)
 
 
 # pylint:disable=too-few-public-methods
