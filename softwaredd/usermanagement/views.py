@@ -463,6 +463,55 @@ class CreateHardwareView(View):
         return redirect("list-hardware-view")
 
 
+class CreateLayoutView(View):
+    """View for creating Layout"""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request, "Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee = Employee.objects.get(pk=request.user.pk)
+        assert isinstance(employee, Employee)
+        if not employee.perm_database and employee.perm_layout:
+            messages.warning(request, "Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateHardwareForm()
+        employ = get_employee(request)
+        return render(
+            request,
+            "usermanagement/create_layout.html",
+            {"form": form, "employ": employ},
+        )
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        """post"""
+        if not request.user.is_authenticated:
+            messages.warning(request, "Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee = Employee.objects.get(pk=request.user.pk)
+        assert isinstance(employee, Employee)
+        if not employee.perm_database and employee.perm_layout:
+            messages.warning(request, "Unzureichende Berechtigungen")
+            return redirect("index-view")
+        form = CreateHardwareForm(data=request.POST)
+        pdf_text: str = form.data["pdf_text"]
+        data = {
+            "pdf_text": pdf_text,
+        }
+        if pdf_text == "":
+            data.pop("pdf_text")
+        url = API_URL + "/dbApi/v1/post/layout/new/"
+        content: Response = requests.post(
+            url, json=employee.get_permission_dict(), params=data, timeout=10
+        )
+        assert isinstance(content, Response)
+        if not content.status_code == 200:
+            messages.warning(request, "Keine Verbindung zur Datenbank möglich")
+            return redirect("create-layout-view")
+        return redirect("list-layout-view")
+
+
 class ListOffersView(View):
     """View for listing offers"""
 

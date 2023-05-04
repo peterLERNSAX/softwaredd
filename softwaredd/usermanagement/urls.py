@@ -71,6 +71,11 @@ urlpatterns = [
         name="create-offer-view",
     ),
     path(
+        "grundrisse/erstellen/",
+        views.CreateLayoutView.as_view(),
+        name="create-layout-view",
+    ),
+    path(
         "kunden/löschen/<int:id>/",
         views.DeleteCustomerView.as_view(),
         name="delete-customer-view",

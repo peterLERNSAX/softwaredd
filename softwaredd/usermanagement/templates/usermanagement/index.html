@@ -52,6 +52,11 @@
               <a class="dropdown-item nav-link bg-dark" href="{% url 'create-customer-view' %}">Kunden hinzufügen</a>
             </li>
             {% endif %}
+            {% if employ.perm_layout and employ.perm_database %}
+            <li>
+              <a class="dropdown-item nav-link bg-dark" href="{% url 'create-layout-view' %}">Grundriss hochladen</a>
+            </li>
+            {% endif %}
           </ul>
         </li>
         {% endif %}
