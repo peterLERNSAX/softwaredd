@@ -512,7 +512,6 @@ class CreateLayoutView(View):
         return redirect("list-layout-view")
 
 
-
 class ListOffersView(View):
     """View for listing offers"""
 
