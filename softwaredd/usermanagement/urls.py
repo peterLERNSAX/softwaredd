@@ -66,7 +66,7 @@ urlpatterns = [
         name="create-customer-view",
     ),
     path(
-        "angebot/erstellen/",
+        "angebote/erstellen/",
         views.CreateOfferView.as_view(),
         name="create-offer-view",
     ),
