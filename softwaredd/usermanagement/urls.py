@@ -66,9 +66,14 @@ urlpatterns = [
         name="create-customer-view",
     ),
     path(
-        "angebote/erstellen/",
+        "angebot/erstellen/",
         views.CreateOfferView.as_view(),
         name="create-offer-view",
+    ),
+    path(
+        "layout/erstellen/",
+        views.CreateLayoutView.as_view(),
+        name="create-layout-view",
     ),
     path(
         "kunden/löschen/<int:id>/",
