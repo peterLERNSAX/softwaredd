@@ -42,10 +42,12 @@
               <a class="dropdown-item nav-link bg-dark" href="{% url 'create-user-view' %}">Nutzer erstellen</a>
             </li>
             {% endif %}
-            {% if employ.perm_database %}
+            {% if employ.perm_database and employ.perm_offer %}
             <li>
               <a class="dropdown-item nav-link bg-dark" href="{% url 'create-hardware-view' %}">Harware hinzufügen</a>
             </li>
+            {% endif %}
+            {% if employ.perm_database %}
             <li>
               <a class="dropdown-item nav-link bg-dark" href="{% url 'create-customer-view' %}">Kunden hinzufügen</a>
             </li>
@@ -73,6 +75,8 @@
             <li>
               <a class="dropdown-item nav-link bg-dark" href="{% url 'list-customer-view' %}">Kunden auflisten</a>
             </li>
+            {% endif %}
+            {% if employ.perm_database and employ.perm_offer %}
             <li>
               <a class="dropdown-item nav-link bg-dark" href="{% url 'list-hardware-view' %}">Hardware auflisten</a>
             </li>
@@ -82,7 +86,7 @@
               <a class="dropdown-item nav-link bg-dark" href="{% url 'list-offer-view' %}">Angebotsdateien auflisten</a>
             </li>
             {% endif %}
-            {% if employ.perm_offer %}
+            {% if employ.perm_offer and employ.perm_database %}
             <li>
               <a class="dropdown-item nav-link bg-dark" href="{% url 'list-offers-view' %}">Angebote auflisten</a>
             </li>
