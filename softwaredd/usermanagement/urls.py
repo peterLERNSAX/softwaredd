@@ -71,7 +71,7 @@ urlpatterns = [
         name="create-offer-view",
     ),
     path(
-        "layout/erstellen/",
+        "grundrisse/erstellen/",
         views.CreateLayoutView.as_view(),
         name="create-layout-view",
     ),
