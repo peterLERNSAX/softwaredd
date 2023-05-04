@@ -18,6 +18,8 @@
 - [DeleteEmployee](#deleteemployee)
 - [ListEmployee](#listemployee)
 - [ListLayoutView](#listlayoutview)
+- [ListCustomerView](#listcustomerview)
+- [ListHardwareView](#listhardwareview)
 
 ---
 ---
@@ -456,7 +458,169 @@ Test coverage: `no`
 - creates dict with employee permissions
 - sends `post` Request to the [API](../api.md)
   - [Route](../api/routes.md#route-dbapiv1postlayoutall)
-- Renders page `list_layout.html` with the current user and all layouts
+- Renders page `list_layout.html`
+
+[go up](#views)
+
+---
+---
+
+### ListCustomerView
+
+```python
+    class ListCustomerView(View):
+        """View for listing customers"""
+```
+
+Test coverage: `no`
+
+- View for listing all customers
+
+#### ListCustomerView get
+
+```python
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request, "Nicht Authentifiziert!")
+            return redirect("index-view")
+        url = API_URL + "/dbApi/v1/post/customer/all/"
+        employee = Employee.objects.get(pk=request.user.pk)
+        assert isinstance(employee, Employee)
+        content: Response = requests.post(
+            url, json=employee.get_permission_dict(), timeout=10
+        )
+        content_dict = json.loads(content.content)
+        employ = get_employee(request)
+        return render(
+            request,
+            "usermanagement/list_customer.html",
+            {"content": content_dict["response"], "employ": employ},
+        )
+```
+
+- sets api url
+- gets current employee
+- creates dict with employee permissions
+- sends `post` Request to the [API](../api.md)
+  - [Route](../api/routes.md#route-dbapiv1postcustomerall)
+- Renders page `list_customer.html`
+
+[go up](#views)
+
+---
+---
+
+### ListHardwareView
+
+```python
+    class ListHardwareView(View):
+        """View for listing hardware"""
+```
+
+Test coverage: `no`
+
+- View for listing all hardware
+
+#### ListHardwareView get
+
+```python
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request, "Nicht Authentifiziert!")
+            return redirect("index-view")
+        url = API_URL + "/dbApi/v1/post/hardware/all/"
+        employee = Employee.objects.get(pk=request.user.pk)
+        assert isinstance(employee, Employee)
+        content: Response = requests.post(
+            url, json=employee.get_permission_dict(), timeout=10
+        )
+        content_dict = json.loads(content.content)
+        employ = get_employee(request)
+        return render(
+            request,
+            "usermanagement/list_hardware.html",
+            {"content": content_dict["response"], "employ": employ},
+        )
+```
+
+- sets api url
+- gets current employee
+- creates dict with employee permissions
+- sends `post` Request to the [API](../api.md)
+  - [Route](../api/routes.md#route-dbapiv1posthardwareall)
+- Renders page `list_hardware.html`
+
+[go up](#views)
+
+---
+---
+
+### CreateOfferView
+
+```python
+    class CreateOfferView(View):
+        """View for creating an offer"""
+```
+
+Test coverage: `no`
+
+- View for creating an offer
+
+#### CreateOfferView get
+
+```python
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """get"""
+        if not request.user.is_authenticated:
+            messages.warning(request, "Nicht Authentifiziert!")
+            return redirect("index-view")
+        employee = Employee.objects.get(pk=request.user.pk)
+        assert isinstance(employee, Employee)
+        if not employee.perm_offer:
+            messages.warning(request, "Unzureichende Berechtigungen")
+            return redirect("index-view")
+        url_customer = API_URL + "/dbApi/v1/post/customer/all/"
+        customers: Response = requests.post(
+            url_customer, json=employee.get_permission_dict(), timeout=10
+        )
+        customer_dict = json.loads(customers.content)
+
+        url_layout = API_URL + "/dbApi/v1/post/layout/all/"
+        layouts: Response = requests.post(
+            url_layout, json=employee.get_permission_dict(), timeout=10
+        )
+        layout_dict = json.loads(layouts.content)
+
+        url_offer_files = API_URL + "/dbApi/v1/post/offer/file/all/"
+        offer_files: Response = requests.post(
+            url_offer_files, json=employee.get_permission_dict(), timeout=10
+        )
+        offer_files_dict = json.loads(offer_files.content)
+        form = CreateOfferForm()
+        employ = get_employee(request)
+        return render(
+            request,
+            "usermanagement/create_offer.html",
+            {
+                "form": form,
+                "employ": employ,
+                "customers": customer_dict["response"],
+                "layouts": layout_dict["response"],
+                "offer_files": offer_files_dict["response"],
+            },
+        )
+```
+
+- checks if user is logged in
+- checks user permissions
+- sets api url
+- gets current employee
+- creates dict with employee permissions
+- sends `post` Request to the [API](../api.md)
+  - [Route](../api/routes.md#route-dbapiv1postoffernew)
+- Renders page `create_offer.html`
 
 [go up](#views)
 
