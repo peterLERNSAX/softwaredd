@@ -53,7 +53,7 @@ async def get_all_customers(perms: Permission) -> Any:
     """
     Route for getting all customers from db
     """
-    if not check_permission(perms, 4):
+    if not check_permission(perms, 3):
         return return_403()
     customers = db_manager.show_all_customers()
     return {"response": customers}
@@ -65,6 +65,8 @@ async def get_all_offer(perms: Permission) -> Any:
     Route for getting all offers from db
     """
     if not check_permission(perms, 4):
+        return return_403()
+    if not check_permission(perms, 3):
         return return_403()
     offers = db_manager.show_all_offer()
     return {"response": offers}
@@ -88,6 +90,8 @@ async def get_all_layout(perms: Permission) -> Any:
     """
     if not check_permission(perms, 2):
         return return_403()
+    if not check_permission(perms,3):
+        return return_403()
     layouts = db_manager.show_all_layout()
     return {"response": layouts}
 
@@ -99,6 +103,8 @@ async def get_all_offer_file(perms: Permission) -> Any:
     """
     if not check_permission(perms, 5):
         return return_403()
+    if not check_permission(perms,3):
+        return return_403()
     offers = db_manager.show_all_offer_file()
     return {"response": offers}
 
@@ -109,6 +115,8 @@ async def post_new_layout(pdf_text: str, perms: Permission) -> Any:
     Route for creating a new layout
     """
     if not check_permission(perms, 2):
+        return return_403()
+    if not check_permission(perms,3):
         return return_403()
     layout = Layout(pdf_text=pdf_text)
     db_manager.write_layout(layout)
@@ -124,7 +132,7 @@ async def post_new_customer(
     company_name: Optional[str] = None,
 ) -> Any:
     """Route for creating new customer"""
-    if not check_permission(perms, 4):
+    if not check_permission(perms,3):
         return return_403()
     customer = Customer(
         firstname=firstname,
@@ -153,6 +161,8 @@ async def post_new_hardware(
     """
     if not check_permission(perms, 4):
         return return_403()
+    if not check_permission(perms,3):
+        return return_403()
     hardware = Hardware(
         name=name,
         description=description,
@@ -179,6 +189,8 @@ async def post_new_offer(
     """
     if not check_permission(perms, 4):
         return return_403()
+    if not check_permission(perms,3):
+        return return_403()
     offer = Offer(
         customer=customer,
         offer_file=offer_file,
@@ -195,6 +207,8 @@ async def post_new_offer_file(pdf_text: str, perms: Permission) -> Any:
     Route for creating new offer file
     """
     if not check_permission(perms, 5):
+        return return_403()
+    if not check_permission(perms,3):
         return return_403()
     offer = OfferFile(pdf_text=pdf_text)
     db_manager.write_offer_file(offer)
@@ -219,6 +233,8 @@ async def delete_offer(offer_id: int, perms: Permission) -> Any:
     """
     if not check_permission(perms, 4):
         return return_403()
+    if not check_permission(perms,3):
+        return return_403()
     db_manager.remove_offer(offer_id)
     return {"response": 1}
 
@@ -229,6 +245,8 @@ async def delete_hardware(hardware_id: int, perms: Permission) -> Any:
     Route for deleting hardware
     """
     if not check_permission(perms, 3):
+        return return_403()
+    if not check_permission(perms,4):
         return return_403()
     db_manager.remove_hardware(hardware_id)
     return {"response": 1}
@@ -241,6 +259,8 @@ async def delete_layout(layout_id: int, perms: Permission) -> Any:
     """
     if not check_permission(perms, 2):
         return return_403()
+    if not check_permission(perms,3):
+        return return_403()
     db_manager.remove_layout(layout_id=layout_id)
     return {"response": 1}
 
@@ -251,6 +271,8 @@ async def delete_offer_file(offer_id: int, perms: Permission) -> Any:
     Route for deleting offer
     """
     if not check_permission(perms, 5):
+        return return_403()
+    if not check_permission(perms,3):
         return return_403()
     db_manager.remove_offer_file(offer_id=offer_id)
     return {"response": 1}
