@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from lagerdb.main import session
 from lagerdb.manager import DBManager
 from lagerdb.models.models import Customer, Hardware, Layout, Offer, OfferFile
+from sqlalchemy import ForeignKey
 
 # pylint:disable=no-name-in-module
 from pydantic import BaseModel
@@ -183,6 +184,7 @@ async def post_new_offer(
     offer_file: Optional[int] = None,
     layout: Optional[int] = None,
     description: Optional[str] = None,
+    hardware: Optional[list[int]] = None,
 ) -> Any:
     """
     Route for creating new offer
@@ -196,6 +198,7 @@ async def post_new_offer(
         offer_file=offer_file,
         layout=layout,
         description=description,
+        hardwware = hardware,
     )
     db_manager.write_offer(offer)
     return {"response": 1}
